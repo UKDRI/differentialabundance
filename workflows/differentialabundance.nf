@@ -45,8 +45,8 @@ if (params.study_type == 'affy_array'){
 } else {
     // If this is not microarray data or maxquant output, and this an RNA-seq dataset,
     // then assume we're reading from a matrix
-
-    if (params.study_type == "rnaseq" && params.matrix) {
+    
+    if ( params.matrix && (params.study_type == "rnaseq" || params.study_type == "mass_spec") ) {
         matrix_file = file(params.matrix, checkIfExists: true)
         ch_in_raw = Channel.of([ exp_meta, matrix_file])
     } else {
@@ -99,6 +99,7 @@ citations_file = file(params.citations_file, checkIfExists: true)
 
 include { TABULAR_TO_GSEA_CHIP } from '../modules/local/tabular_to_gsea_chip'
 include { FILTER_DIFFTABLE } from '../modules/local/filter_difftable'
+include { LIMMA_LOG_NORMALIZE_MEDIAN } from '../modules/local/limma'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -303,7 +304,7 @@ workflow DIFFERENTIALABUNDANCE {
         ch_norm = VALIDATOR.out.assays
     }
 
-    if(params.study_type != 'rnaseq') {
+    if(params.study_type != 'rnaseq' && params.study_type != 'mass_spec') {
         ch_matrix_for_differential = ch_norm
     }
     else{
@@ -334,12 +335,21 @@ workflow DIFFERENTIALABUNDANCE {
     )
 
     // Prepare inputs for differential processes
+    if(params.study_type == 'mass_spec') {
+        LIMMA_LOG_NORMALIZE_MEDIAN(CUSTOM_MATRIXFILTER.out.filtered)
+        ch_norm = LIMMA_LOG_NORMALIZE_MEDIAN.out.normalised
 
-    ch_samples_and_matrix = VALIDATOR.out.sample_meta
+        ch_samples_and_matrix = VALIDATOR.out.sample_meta
+        .join(ch_norm)     // -> meta, samplesheet, filtered matrix
+        .first()
+    }
+    else{
+        ch_samples_and_matrix = VALIDATOR.out.sample_meta
         .join(CUSTOM_MATRIXFILTER.out.filtered)     // -> meta, samplesheet, filtered matrix
         .first()
+    }
 
-    if (params.study_type == 'affy_array' || params.study_type == 'geo_soft_file' || params.study_type == 'maxquant'){
+    if (params.study_type == 'mass_spec' || params.study_type == 'affy_array' || params.study_type == 'geo_soft_file' || params.study_type == 'maxquant'){
 
         LIMMA_DIFFERENTIAL (
             ch_contrasts,
