@@ -634,7 +634,7 @@
             "fa_icon": "fas fa-adjust"
         },
         "limma_specific_options_microarray_only": {
-            "title": "Limma specific options (microarray only)",
+            "title": "Limma specific options (microarray and mass_spec)",
             "type": "object",
             "description": "",
             "default": "",
@@ -643,6 +643,12 @@
                     "type": "number",
                     "fa_icon": "fas fa-clone",
                     "description": "passed to lmFit(), positive integer giving the number of times each distinct probe is printed on each array."
+                },
+                "limma_normalisation": {
+                    "type": "string",
+                    "fa_icon": "fas fa-clone",
+                    "default": "median,quantile,cyclic_loess,vsn",
+                    "description": "List of comma seperated normalisation methods (mass_spec only), possible methods: median, quantile, cyclic_loess, vsn"
                 },
                 "limma_spacing": {
                     "type": "string",
