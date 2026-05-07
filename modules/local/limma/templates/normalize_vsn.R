@@ -43,8 +43,7 @@ ids <- mat[,1]
 mat_data <- as.matrix( mat[,c(2:dim(mat)[2])] )
 
 # log-normalise data
-mat_data <- log2(mat_data + 1)
-mat_data <- normalizeBetweenArrays(mat_data, method='scale')
+mat_data <- normalizeVSN(mat_data)
 
 mat_norm <- cbind(ids, as.data.frame(mat_data) )
 colnames(mat_norm) <- col_names
@@ -52,7 +51,7 @@ colnames(mat_norm) <- col_names
 # write output
 write.table(
     mat_norm,
-    file = paste(output_prefix, 'lognorm.tsv', sep = '.'),
+    file = paste(output_prefix, 'norm_vsn.tsv', sep = '.'),
     col.names = TRUE,
     row.names = FALSE,
     sep = '\t',

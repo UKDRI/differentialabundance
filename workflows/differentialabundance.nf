@@ -100,6 +100,9 @@ citations_file = file(params.citations_file, checkIfExists: true)
 include { TABULAR_TO_GSEA_CHIP } from '../modules/local/tabular_to_gsea_chip'
 include { FILTER_DIFFTABLE } from '../modules/local/filter_difftable'
 include { LIMMA_LOG_NORMALIZE_MEDIAN } from '../modules/local/limma'
+include { LIMMA_LOG_NORMALIZE_QUANTILE } from '../modules/local/limma'
+include { LIMMA_LOG_NORMALIZE_CYCLIC } from '../modules/local/limma'
+include { LIMMA_NORMALIZE_VSN } from '../modules/local/limma'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -335,21 +338,11 @@ workflow DIFFERENTIALABUNDANCE {
     )
 
     // Prepare inputs for differential processes
-    if(params.study_type == 'mass_spec') {
-        LIMMA_LOG_NORMALIZE_MEDIAN(CUSTOM_MATRIXFILTER.out.filtered)
-        ch_norm = LIMMA_LOG_NORMALIZE_MEDIAN.out.normalised
+    ch_samples_and_matrix = VALIDATOR.out.sample_meta
+    .join(CUSTOM_MATRIXFILTER.out.filtered)     // -> meta, samplesheet, filtered matrix
+    .first()
 
-        ch_samples_and_matrix = VALIDATOR.out.sample_meta
-        .join(ch_norm)     // -> meta, samplesheet, filtered matrix
-        .first()
-    }
-    else{
-        ch_samples_and_matrix = VALIDATOR.out.sample_meta
-        .join(CUSTOM_MATRIXFILTER.out.filtered)     // -> meta, samplesheet, filtered matrix
-        .first()
-    }
-
-    if (params.study_type == 'mass_spec' || params.study_type == 'affy_array' || params.study_type == 'geo_soft_file' || params.study_type == 'maxquant'){
+    if (params.study_type == 'affy_array' || params.study_type == 'geo_soft_file' || params.study_type == 'maxquant'){
 
         LIMMA_DIFFERENTIAL (
             ch_contrasts,
@@ -364,8 +357,43 @@ workflow DIFFERENTIALABUNDANCE {
         ch_processed_matrices = ch_norm
             .map{ it.tail() }
             .first()
+    } else if (params.study_type == 'mass_spec' ) {
+
+        LIMMA_LOG_NORMALIZE_MEDIAN(CUSTOM_MATRIXFILTER.out.filtered)
+        ch_norm = LIMMA_LOG_NORMALIZE_MEDIAN.out.normalised
+        ch_processed_matrices = ch_norm.map{ it.tail() }.first()
+
+        LIMMA_LOG_NORMALIZE_QUANTILE(CUSTOM_MATRIXFILTER.out.filtered)
+        ch_quantile = LIMMA_LOG_NORMALIZE_QUANTILE.out.normalised
+        ch_processed_matrices = ch_processed_matrices.combine( ch_quantile.map{ it.tail() }.first() )
+
+        LIMMA_LOG_NORMALIZE_CYCLIC(CUSTOM_MATRIXFILTER.out.filtered)
+        ch_cyclic = LIMMA_LOG_NORMALIZE_CYCLIC.out.normalised
+        ch_processed_matrices = ch_processed_matrices.combine(ch_cyclic.map{ it.tail() }.first())
+        
+        LIMMA_NORMALIZE_VSN(CUSTOM_MATRIXFILTER.out.filtered)
+        ch_vsn = LIMMA_NORMALIZE_VSN.out.normalised
+        ch_processed_matrices = ch_processed_matrices.combine(ch_vsn.map{ it.tail() }.first())
+
+
+        // select assay for differential analysis
+        if (params.exploratory_final_assay == 'quantile_normalised' || params.exploratory_final_assay == 'quantile_normalized' || params.exploratory_final_assay == 'quantile') {
+            ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_quantile).first() // -> meta, samplesheet, filtered matrix
+        } else if (params.exploratory_final_assay == 'cyclic_loess') {
+            ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_cyclic).first() // -> meta, samplesheet, filtered matrix
+        } else if (params.exploratory_final_assay == 'variance_stabilised' || params.exploratory_final_assay == 'variance_stabilized' || params.exploratory_final_assay == 'vsn' ) {
+            ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_vsn).first() // -> meta, samplesheet, filtered matrix
+        } else if (params.exploratory_final_assay == 'raw') {
+            ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_raw).first() // -> meta, samplesheet, filtered matrix
+        } else {
+            ch_sample_matrix_differential = VALIDATOR.out.sample_meta.join(ch_norm).first() // -> meta, samplesheet, filtered matrix
+        }
+
+        LIMMA_DIFFERENTIAL (ch_contrasts, ch_samples_and_matrix_differential)
+        ch_differential = LIMMA_DIFFERENTIAL.out.results
+        ch_model = LIMMA_DIFFERENTIAL.out.model
     }
-    else{
+    else {
 
         DESEQ2_NORM (
             ch_contrasts.first(),
@@ -518,7 +546,7 @@ workflow DIFFERENTIALABUNDANCE {
     }else{
         ch_mat = ch_raw.combine(ch_processed_matrices)
     }
-
+    
     ch_all_matrices = VALIDATOR.out.sample_meta                // meta, samples
         .join(VALIDATOR.out.feature_meta)                       // meta, samples, features
         .join(ch_mat)                                           // meta, samples, features, raw, norm (or just norm)
@@ -526,7 +554,7 @@ workflow DIFFERENTIALABUNDANCE {
             tuple(it[0], it[1], it[2], it[3..it.size()-1])
         }
         .first()
-
+    
     PLOT_EXPLORATORY(
         ch_contrast_variables
             .combine(ch_all_matrices.map{ it.tail() })
