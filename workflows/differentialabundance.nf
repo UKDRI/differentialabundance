@@ -730,7 +730,14 @@ workflow DIFFERENTIALABUNDANCE {
             // in this way we don't need to harcode the contrast keys
             def paramset_contrast_keys = contrast[0].keySet()
             def contrast_maps = meta_with_contrast.collect { it.subMap(paramset_contrast_keys) }
-            [meta, meta_with_contrast, results, contrast_maps]
+            // Sort meta_with_contrast, results and contrast_maps together by contrast id
+            // so that the CSV rows and the result file list are always in the same
+            // deterministic order, regardless of parallel job completion timing.
+            def sorted = [meta_with_contrast, results, contrast_maps]
+                .transpose()
+                .sort { a -> a[0].id }
+                .transpose()
+            [meta, sorted[0], sorted[1], sorted[2]]
         }
         .multiMap { meta, meta_with_contrast, results, contrast_maps ->
             differential_results: [meta, meta_with_contrast, results]
@@ -762,7 +769,8 @@ workflow DIFFERENTIALABUNDANCE {
         .map { meta, meta_with_contrast, results, contrast, variable, reference, target, formula, comparison ->
             def paramset_contrast_keys = contrast[0].keySet()
             def contrast_maps = meta_with_contrast.collect { it.subMap(paramset_contrast_keys) }
-            // Sort meta_with_contrast, results, contrast_maps together by contrast id
+            // Sort all three lists together by contrast id before multiMap
+            // so CSV rows and result files stay in the same deterministic order.
             def sorted = [meta_with_contrast, results, contrast_maps]
                 .transpose()
                 .sort { a -> a[0].id }
