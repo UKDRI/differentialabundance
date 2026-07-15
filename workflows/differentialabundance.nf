@@ -431,6 +431,10 @@ workflow DIFFERENTIALABUNDANCE {
         }
         .groupTuple() // [meta, [contrast], [variable], [reference], [target], [formula], [comparison]]
 
+    ch_contrasts.view { meta, contrast, variable, reference, target, formula, comparison ->
+    "CONTRAST id=${contrast[0].id} variable=${variable[0]} reference=${reference[0]} target=${target[0]}"
+    }
+
     // ========================================================================
     // Filter matrix
     // ========================================================================
@@ -737,7 +741,7 @@ workflow DIFFERENTIALABUNDANCE {
     ch_contrasts_sorted = differential_with_contrast.contrast_maps
         .collectFile { meta, contrast_map ->
             def header = contrast_map[0].keySet().join(',')
-            def content = contrast_map.collect { it.values().join(',') }.sort().reverse()
+            def content = contrast_map.collect { it.values().join(',') }
             def lines = header + '\n' + content.join('\n') + '\n'
             ["${meta.paramset_name}.csv", lines]
         }
@@ -749,6 +753,7 @@ workflow DIFFERENTIALABUNDANCE {
         }
 
     // For shinyngs: filter to keep only simple contrasts (non-empty variable)
+    // Sort all three lists together by contrast id BEFORE multiMap, so they stay in lockstep
     differential_with_contrast_shinyngs = differential_with_contrast.differential_results
         .transpose()
         .filter { meta, contrast, results -> contrast.variable?.trim() }
@@ -757,7 +762,12 @@ workflow DIFFERENTIALABUNDANCE {
         .map { meta, meta_with_contrast, results, contrast, variable, reference, target, formula, comparison ->
             def paramset_contrast_keys = contrast[0].keySet()
             def contrast_maps = meta_with_contrast.collect { it.subMap(paramset_contrast_keys) }
-            [meta, meta_with_contrast, results, contrast_maps]
+            // Sort meta_with_contrast, results, contrast_maps together by contrast id
+            def sorted = [meta_with_contrast, results, contrast_maps]
+                .transpose()
+                .sort { a -> a[0].id }
+                .transpose()
+            [meta, sorted[0], sorted[1], sorted[2]]
         }
         .multiMap { meta, meta_with_contrast, results, contrast_maps ->
             differential_results: [meta, meta_with_contrast, results]
@@ -770,7 +780,7 @@ workflow DIFFERENTIALABUNDANCE {
             def header = contrast_map[0].keySet().join(',')
             def content = contrast_map.collect { it.values().collect { val ->
                     val ? val.toString() : ''
-                }.join(',') }.sort().reverse()
+                }.join(',') }
             def lines = header + '\n' + content.join('\n') + '\n'
             ["${meta.paramset_name}_shinyngs.csv", lines]
         }
