@@ -32,19 +32,19 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "UNTAR": {
                     "untar": 1.34
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -125,7 +125,7 @@
             ],
             [
                 "raw._eset.rds:md5,ac3995c3c95bda63c0f35ad9b7c77499",
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
                 "hgu133plus2.annotation.tsv:md5,f2b82ef12b2a2e8e575de06766583d96",
                 "phenotype_uninvolved_lesional_GSE50790.limma.results.tsv:md5,099ea1797a834a0cbf5e5a576a2b1a3e",
                 "phenotype_uninvolved_lesional_GSE50790.limma.results_filtered.tsv:md5,445b8fd9dcd34c2d273613b03ead0a7f",
@@ -143,10 +143,10 @@
                 "GSM1229348_Gudjohnsson_008_8470_PN.CEL.gz:md5,ec5129e035badf3b670178d53e24f0cc"
             ]
         ],
-        "timestamp": "2026-06-17T16:08:47.99618182",
+        "timestamp": "2026-07-21T10:33:01.8934267",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     },
     "Test affy profile - affy_limma_gsea": {
@@ -188,19 +188,19 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "UNTAR": {
                     "untar": 1.34
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -399,7 +399,7 @@
                 "phenotype_uninvolved_lesional_GSE50790.h.all.v2022.1.Hs.symbols.gsea_report_for_lesional.tsv:md5,b974346db7e24087ba4345a7693118e4",
                 "phenotype_uninvolved_lesional_GSE50790.h.all.v2022.1.Hs.symbols.gsea_report_for_uninvolved.tsv:md5,0b7059fdccf5fc9be4b5a9f6f9e74759",
                 "phenotype_uninvolved_lesional_GSE50790.h.all.v2022.1.Hs.symbols.ranked_gene_list_lesional_versus_uninvolved.tsv:md5,72dfaeff534ba9a2b32f63524e835dc4",
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
                 "hgu133plus2.annotation.tsv:md5,f2b82ef12b2a2e8e575de06766583d96",
                 "phenotype_uninvolved_lesional_GSE50790.limma.results.tsv:md5,099ea1797a834a0cbf5e5a576a2b1a3e",
                 "phenotype_uninvolved_lesional_GSE50790.limma.results_filtered.tsv:md5,445b8fd9dcd34c2d273613b03ead0a7f",
@@ -416,10 +416,10 @@
                 "GSM1229348_Gudjohnsson_008_8470_PN.CEL.gz:md5,ec5129e035badf3b670178d53e24f0cc"
             ]
         ],
-        "timestamp": "2026-06-17T16:03:26.359295668",
+        "timestamp": "2026-07-21T10:27:09.813010108",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     }
 }

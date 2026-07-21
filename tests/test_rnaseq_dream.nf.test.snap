@@ -20,16 +20,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -92,7 +92,7 @@
                 "tables/differential/rnaseq_dream/treatment_plus_genotype_SRP254919_dream.annotated.tsv"
             ],
             [
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "interaction_genotype_treatment_SRP254919.dream.results.tsv:md5,ef9f19d0a95dee50466035e9834bbaf3",
                 "interaction_genotype_treatment_SRP254919.dream.results_filtered.tsv:md5,0bfc9215edc6aad064c3ce6abc81bfce",
@@ -105,10 +105,10 @@
                 "treatment_plus_genotype_SRP254919_dream.annotated.tsv:md5,05ed9864e4fcec606c3061fcf827e43f"
             ]
         ],
-        "timestamp": "2026-06-18T21:04:17.531985657",
+        "timestamp": "2026-07-21T12:13:10.059536952",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     },
     "Test rnaseq dream profile": {
@@ -137,16 +137,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -218,7 +218,7 @@
                 "tables/processed_abundance/rnaseq_dream/all.normalised_counts.tsv"
             ],
             [
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "full_model_with_interactions_SRP254919.dream.results.tsv:md5,d826e54c776bebebbb1edb82a2de6441",
                 "full_model_with_interactions_SRP254919.dream.results_filtered.tsv:md5,0bfc9215edc6aad064c3ce6abc81bfce",
@@ -235,10 +235,10 @@
                 "all.normalised_counts.tsv:md5,511d248c74bd9c7c9189c0ce8543366b"
             ]
         ],
-        "timestamp": "2026-06-18T21:00:21.993018604",
+        "timestamp": "2026-07-21T12:10:13.646131588",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     },
     "Test - Numeric sample IDs - rnaseq dream profile - with decoupler": {
@@ -274,16 +274,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -359,7 +359,7 @@
                 "tables/processed_abundance/rnaseq_dream_decoupler/all.normalised_counts.tsv"
             ],
             [
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "dream_treatment_mCherry_hND6__SRP254919_consensus_estimate_decoupler.tsv:md5,fcc29c053d761e6593eea8989140c931",
                 "dream_treatment_mCherry_hND6__SRP254919_consensus_pvals_decoupler.tsv:md5,59259f2c50f28d9bdc71b03afe614729",
@@ -378,10 +378,10 @@
                 "all.normalised_counts.tsv:md5,bc131fb2bfd3eae64b651f3480bd120a"
             ]
         ],
-        "timestamp": "2026-06-18T21:17:53.466197777",
+        "timestamp": "2026-07-21T12:21:12.255982951",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     },
     "Test rnaseq dream profile - with decoupler": {
@@ -417,16 +417,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -526,7 +526,7 @@
                 "tables/processed_abundance/rnaseq_dream_decoupler/all.normalised_counts.tsv"
             ],
             [
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "dream_full_model_with_interactions_SRP254919_consensus_estimate_decoupler.tsv:md5,db4d8694ac151b0cb9aa9840383d6e20",
                 "dream_full_model_with_interactions_SRP254919_consensus_pvals_decoupler.tsv:md5,bb425d1e519debbed53b7fe268425579",
@@ -559,10 +559,10 @@
                 "all.normalised_counts.tsv:md5,511d248c74bd9c7c9189c0ce8543366b"
             ]
         ],
-        "timestamp": "2026-06-18T21:14:24.196038925",
+        "timestamp": "2026-07-21T12:18:48.863180536",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     },
     "Test generic_matrix dream profile - complex contrast - with zero intercept - 2": {
@@ -586,10 +586,10 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.1.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -649,10 +649,10 @@
                 "zero_intercept_model_2_SRP254919_dream.annotated.tsv:md5,ae3f790512810cf58e86ec31f28b7d4b"
             ]
         ],
-        "timestamp": "2026-06-18T21:07:54.315220002",
+        "timestamp": "2026-07-21T12:37:24.436874051",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     }
 }
