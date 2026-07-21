@@ -129,6 +129,16 @@ A second optional output is produced by leveraging [shinyngs](https://github.com
 
 ![screenshot of the ShinyNGS gene plot](docs/images/shinyngs_gene_plot.png "ShinyNGS gene plot")
 
+The app provides interactive versions of the key exploratory and differential plot types, for example principal components, sample clustering heatmaps, volcano plots and per-gene boxplots:
+
+![screenshot of the ShinyNGS PCA plot](docs/images/shinyngs_pca.png "ShinyNGS PCA plot")
+
+![screenshot of the ShinyNGS clustering heatmap](docs/images/shinyngs_heatmap.png "ShinyNGS clustering heatmap")
+
+![screenshot of the ShinyNGS volcano plot](docs/images/shinyngs_volcano.png "ShinyNGS volcano plot")
+
+![screenshot of the ShinyNGS top gene boxplots](docs/images/shinyngs_boxplot.png "ShinyNGS top gene boxplots")
+
 By default the application is provided as an R script and associated serialised data structure, which you can use to quickly start the application locally. With proper configuration the app can also be deployed to [shinyapps.io](https://www.shinyapps.io/) - though this requires you to have an account on that service (free tier available).
 
 ## Pipeline output
