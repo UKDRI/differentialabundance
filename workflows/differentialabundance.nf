@@ -718,7 +718,11 @@ workflow DIFFERENTIALABUNDANCE {
     // the contrast entries
     differential_with_contrast = ch_paramsets
         .join( ch_differential_results
-            .groupTuple()
+            // Nest [meta, results] so groupTuple(sort:) sorts the pair jointly by
+            // contrast id -- sorting each list separately would desync meta from results.
+            .map { key, meta, results -> [key, [meta, results]] }
+            .groupTuple(sort: { a, b -> a[0].id <=> b[0].id })
+            .map { key, pairs -> [key, pairs.collect { it[0] }, pairs.collect { it[1] }] }
         )   // [meta, [meta with contrast], [differential results]]
         .join( ch_contrasts )   // [meta, [contrast], [variable], [reference], [target], [formula], [comparison]]
         .map { meta, meta_with_contrast, results, contrast, variable, reference, target, formula, comparison ->
@@ -726,21 +730,22 @@ workflow DIFFERENTIALABUNDANCE {
             // in this way we don't need to harcode the contrast keys
             def paramset_contrast_keys = contrast[0].keySet()
             def contrast_maps = meta_with_contrast.collect { it.subMap(paramset_contrast_keys) }
-            [meta, meta_with_contrast, results, contrast_maps]
+            // Built inline here, where results/meta_with_contrast already arrive in
+            // canonical order, so this can't be produced out of sync by a later edit
+            // that touches only one of them.
+            def header = contrast_maps[0].keySet().join(',')
+            def rows = contrast_maps.collect { it.values().collect { val -> val != null ? val.toString() : '' }.join(',') }
+            def contrast_csv = header + '\n' + rows.join('\n') + '\n'
+            [meta, meta_with_contrast, results, contrast_csv]
         }
-        .multiMap { meta, meta_with_contrast, results, contrast_maps ->
+        .multiMap { meta, meta_with_contrast, results, contrast_csv ->
             differential_results: [meta, meta_with_contrast, results]
-            contrast_maps: [meta, contrast_maps]
+            contrast_csv: [meta, contrast_csv]
         }
 
     // Save temporary contrast csv files with the entries ordered by the differential results
-    ch_contrasts_sorted = differential_with_contrast.contrast_maps
-        .collectFile { meta, contrast_map ->
-            def header = contrast_map[0].keySet().join(',')
-            def content = contrast_map.collect { it.values().join(',') }.sort().reverse()
-            def lines = header + '\n' + content.join('\n') + '\n'
-            ["${meta.paramset_name}.csv", lines]
-        }
+    ch_contrasts_sorted = differential_with_contrast.contrast_csv
+        .collectFile { meta, contrast_csv -> ["${meta.paramset_name}.csv", contrast_csv] }
         // parse the channel to have the contrast file with the corresponding meta
         .map { [it.baseName, it] }
         .join( ch_paramsets.map { [it.paramset_name, it] } )
@@ -748,32 +753,32 @@ workflow DIFFERENTIALABUNDANCE {
             [meta, contrast_file]
         }
 
-    // For shinyngs: filter to keep only simple contrasts (non-empty variable)
+    // For shinyngs: filter to keep only simple contrasts (non-empty variable).
     differential_with_contrast_shinyngs = differential_with_contrast.differential_results
         .transpose()
         .filter { meta, contrast, results -> contrast.variable?.trim() }
-        .groupTuple()
+        // Nest [contrast, results] so groupTuple(sort:) sorts the pair jointly by
+        // contrast id -- sorting each list separately would desync contrast from results.
+        .map { meta, contrast, results -> [meta, [contrast, results]] }
+        .groupTuple(sort: { a, b -> a[0].id <=> b[0].id })
+        .map { meta, pairs -> [meta, pairs.collect { it[0] }, pairs.collect { it[1] }] }
         .join( ch_contrasts )
         .map { meta, meta_with_contrast, results, contrast, variable, reference, target, formula, comparison ->
             def paramset_contrast_keys = contrast[0].keySet()
             def contrast_maps = meta_with_contrast.collect { it.subMap(paramset_contrast_keys) }
-            [meta, meta_with_contrast, results, contrast_maps]
+            def header = contrast_maps[0].keySet().join(',')
+            def rows = contrast_maps.collect { it.values().collect { val -> val != null ? val.toString() : '' }.join(',') }
+            def contrast_csv = header + '\n' + rows.join('\n') + '\n'
+            [meta, meta_with_contrast, results, contrast_csv]
         }
-        .multiMap { meta, meta_with_contrast, results, contrast_maps ->
+        .multiMap { meta, meta_with_contrast, results, contrast_csv ->
             differential_results: [meta, meta_with_contrast, results]
-            contrast_maps: [meta, contrast_maps]
+            contrast_csv: [meta, contrast_csv]
         }
 
     // Create filtered contrast file for shinyngs
-    ch_contrasts_sorted_shinyngs = differential_with_contrast_shinyngs.contrast_maps
-        .collectFile { meta, contrast_map ->
-            def header = contrast_map[0].keySet().join(',')
-            def content = contrast_map.collect { it.values().collect { val ->
-                    val ? val.toString() : ''
-                }.join(',') }.sort().reverse()
-            def lines = header + '\n' + content.join('\n') + '\n'
-            ["${meta.paramset_name}_shinyngs.csv", lines]
-        }
+    ch_contrasts_sorted_shinyngs = differential_with_contrast_shinyngs.contrast_csv
+        .collectFile { meta, contrast_csv -> ["${meta.paramset_name}_shinyngs.csv", contrast_csv] }
         .map { [it.baseName.replaceAll('_shinyngs$', ''), it] }
         .join( ch_paramsets.map { [it.paramset_name, it] } )
         .map { paramset_name, contrast_file, meta ->

@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v2.1.0dev
+## v2.0.1dev - xxxx-xx-xx
 
 ### Added
 
@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - [[#748](https://github.com/nf-core/differentialabundance/pull/748)] - Update `shinyngs` modules to 3.1.1 and modernise the Quarto report to use shinyngs 3.x plotting helpers, replacing hand-written PCA, clustering heatmap, top-gene boxplot, scree, upset, volcano and biotype code and reducing the report's container dependencies. ([@pinin4fjords](https://github.com/pinin4fjords)).
+
+### Fixed
+
+- [[#747](https://github.com/nf-core/differentialabundance/pull/747)] - Fix silent contrast/result ordering mismatch in shinyngs Shiny app caused by `.sort().reverse()` in `collectFile` closures decoupling CSV row order from differential result file order. ([@jozsefkun](https://github.com/jozsefkun), review by [@pinin4fjords](https://github.com/pinin4fjords))
 
 ## v2.0.0 - 2026-05-26
 
