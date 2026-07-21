@@ -1045,17 +1045,20 @@ differential_names <- paste0(contrasts$id)
 results <- map(differential_files, \(diff_file) {
     if (!file.exists(diff_file)) stop(paste("Differential file", diff_file, "does not exist"))
 
+    # shinyngs >= 3.1 read_differential normalises fold changes to a linear
+    # scale, so declare the input scale explicitly (from the pipeline) and
+    # re-log below, since the report works in log2 space (volcano axis,
+    # fold-change thresholds).
     diff <- read_differential(
         diff_file,
         feature_id_column = p$differential_feature_id_column,
         fc_column         = p$differential_fc_column,
         pval_column       = p$differential_pval_column,
-        qval_column       = p$differential_qval_column
+        qval_column       = p$differential_qval_column,
+        fold_change_scale = if (p$differential_foldchanges_logged) "log2" else "linear"
     )
 
-    if (!p$differential_foldchanges_logged) {
-        diff[[p$differential_fc_column]] <- log2(diff[[p$differential_fc_column]])
-    }
+    diff[[p$differential_fc_column]] <- log2(diff[[p$differential_fc_column]])
 
     if (features_provided) {
         merged <- features |>
