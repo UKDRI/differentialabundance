@@ -100,7 +100,7 @@ The `differential` folder is likely to be the core result set for most users, co
 
 </details>
 
-The app must be run in an environment with [ShinyNGS](https://github.com/pinin4fjords/shinyngs) installed, or you can see the workflow parameters to deploy to shinyapps.io (see usage documentation).
+The app needs [ShinyNGS](https://github.com/pinin4fjords/shinyngs) to run: either a native R environment with it installed, or the container image the pipeline uses to build the app. See [Shiny app generation](usage.md#shiny-app-generation) in the usage documentation for both approaches, as well as the workflow parameters to deploy to shinyapps.io.
 
 ### Pipeline information
 

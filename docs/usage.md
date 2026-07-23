@@ -497,7 +497,11 @@ You have 3 choices in running that application:
 
 ### 1. Run locally
 
-You can start the application locally (in an environment where [ShinyNGS](https://github.com/pinin4fjords/shinyngs) is installed) like:
+The app is a `data.rds` object plus an `app.R` launcher, and it needs [ShinyNGS](https://github.com/pinin4fjords/shinyngs) to run. You can either use a native R environment that has ShinyNGS installed, or the same container the pipeline uses for the `SHINYNGS_APP` step, so the app runs against the exact version it was built with.
+
+#### With a native R environment
+
+In an environment where [ShinyNGS](https://github.com/pinin4fjords/shinyngs) is installed:
 
 ```bash
 cd [output directory]/[study id]
@@ -509,6 +513,27 @@ This will give you a local URI to access in your browser:
 ```
 Listening on http://127.0.0.1:3326
 ```
+
+#### With the ShinyNGS container
+
+If you don't have ShinyNGS installed natively, run the app in the container image the pipeline uses to build it (defined in `modules/nf-core/shinyngs/app/main.nf`), so the app matches the object it was serialized against.
+
+From the app directory (`[output directory]/[study id]`), with Docker:
+
+```bash
+docker run --rm -p 3838:3838 -v "$PWD":/app \
+    community.wave.seqera.io/library/r-shinyngs:3.2.0--19cca4636e20b0f7 \
+    R -e "shiny::runApp('/app', host = '0.0.0.0', port = 3838)"
+```
+
+or with Singularity/Apptainer:
+
+```bash
+singularity exec docker://community.wave.seqera.io/library/r-shinyngs:3.2.0--19cca4636e20b0f7 \
+    R -e "shiny::runApp('.', host = '0.0.0.0', port = 3838)"
+```
+
+The app prints `Listening on http://0.0.0.0:3838`; open it in your browser at <http://localhost:3838>.
 
 ### 2. Shinyapps.io deployment
 
