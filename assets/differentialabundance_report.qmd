@@ -406,6 +406,19 @@ render_clustering_heatmaps <- function() {
         if (p$exploratory_n_features == -1) nrow(mat) else p$exploratory_n_features
     }
 
+    # Row labels are hidden on the heatmap but feed the cell mouseover, so
+    # render them as "gene name (gene id)" where a name is available, giving
+    # both identifiers on hover.
+    hover_label <- function(ids) ids
+    if (features_provided && !is.null(p$features_name_col) && p$features_name_col %in% colnames(features)) {
+        id_vals    <- if (p$features_id_col %in% colnames(features)) features[[p$features_id_col]] else rownames(features)
+        name_by_id <- set_names(as.character(features[[p$features_name_col]]), id_vals)
+        hover_label <- function(ids) {
+            nm <- name_by_id[ids]
+            ifelse(is.na(nm) | nm == "" | nm == ids, ids, paste0(nm, " (", ids, ")"))
+        }
+    }
+
     cat("::: {.panel-tabset}")
     walk(rev(names(assay_data)), \(assay_type) {
         cat(paste0("\n##### ", prettify_variable_name(assay_type), "\n"))
@@ -420,7 +433,12 @@ render_clustering_heatmaps <- function() {
             sample_annotation = observations[colnames(heat_mat), informative_variables, drop = FALSE],
             cluster_rows      = FALSE,
             cluster_cols      = TRUE,
-            row_labels        = rownames(heat_mat)
+            row_labels        = hover_label(rownames(heat_mat)),
+            show_row_labels   = FALSE,
+            scale             = "none",
+            grid_gap          = 0,
+            cor_method        = p$exploratory_cor_method,
+            cluster_method    = p$exploratory_clustering_method
         )))
         cat("\n\n")
     })
@@ -1058,7 +1076,12 @@ results <- map(differential_files, \(diff_file) {
         fold_change_scale = if (p$differential_foldchanges_logged) "log2" else "linear"
     )
 
-    diff[[p$differential_fc_column]] <- log2(diff[[p$differential_fc_column]])
+    # read_differential returns sign-preserving linear fold changes
+    # (sign(x) * 2^abs(x)); invert that to log2 for the volcano axis and
+    # fold-change thresholds. Plain log2() would turn every down-regulated
+    # (negative) value into NaN.
+    fc <- diff[[p$differential_fc_column]]
+    diff[[p$differential_fc_column]] <- ifelse(fc == 0, 0, sign(fc) * log2(abs(fc)))
 
     if (features_provided) {
         merged <- features |>
