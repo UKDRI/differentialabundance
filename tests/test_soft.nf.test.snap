@@ -19,16 +19,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -88,14 +88,14 @@
             ],
             [
                 "normalised.eset.rds:md5,75f2a9015741c00482bca7a8dbcf99d4",
-                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "normalised.annotation.tsv:md5,40300ae222ae35fa54daf10a1b86e830",
                 "phenotype_uninvolved_lesional_study.limma.results.tsv:md5,2896fcfc6b1a70ecd6b2eea60c71e922",
                 "phenotype_uninvolved_lesional_study.limma.results_filtered.tsv:md5,ae01d0073e3ddc63c33a08de52d1d5ea",
                 "normalised.matrix.tsv:md5,cf90af62c645d4e7d4b4e4fc69b83f72"
             ]
         ],
-        "timestamp": "2026-07-21T13:00:24.313930145",
+        "timestamp": "2026-07-23T11:05:59.465084244",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"

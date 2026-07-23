@@ -74,19 +74,19 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "UNTAR": {
                     "untar": 1.34
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -386,10 +386,10 @@
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_hND6.tsv:md5,a758fe7e37b971e2a836f28a57d7c3fc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_mCherry.tsv:md5,ce8792382ae299749445767ff16aaecc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.ranked_gene_list_hND6_versus_mCherry.tsv:md5,d71f1db7288800d611fbd623d57c1765",
-                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
-                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
-                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
-                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "hgu133plus2.annotation.tsv:md5,f2b82ef12b2a2e8e575de06766583d96",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
@@ -446,7 +446,7 @@
                 "GSM1229348_Gudjohnsson_008_8470_PN.CEL.gz:md5,ec5129e035badf3b670178d53e24f0cc"
             ]
         ],
-        "timestamp": "2026-07-21T10:41:29.372795857",
+        "timestamp": "2026-07-23T11:30:27.740927342",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"

@@ -20,10 +20,10 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "PROPR_GREA": {
                     "r-propr": "5.1.5"
@@ -32,10 +32,10 @@
                     "r-propr": "5.1.8"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.1.1"
+                    "shinyngs": "3.2.0"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -114,7 +114,7 @@
             [
                 "treatment_mCherry_hND6__SRP254919.propd.adjacency.csv:md5,c60bfbafae4f7e3fa621374654bb8498",
                 "treatment_mCherry_hND6_sample_number_SRP254919.propd.adjacency.csv:md5,c60bfbafae4f7e3fa621374654bb8498",
-                "app.R:md5,2706f3949cd8e1ab20ef8021a58f8e84",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "treatment_mCherry_hND6__SRP254919.propd.genewise.tsv:md5,ca7a72d554cef0e1f3b72ba63ff07575",
                 "treatment_mCherry_hND6__SRP254919.propd.genewise_filtered.tsv:md5,849d52c3f015686234d085bb4e69d9e4",
@@ -128,7 +128,7 @@
                 "treatment_mCherry_hND6_sample_number_SRP254919.grea.tsv:md5,c495a12a0eb9aab836df1daf098b93ac"
             ]
         ],
-        "timestamp": "2026-07-21T12:57:38.18154588",
+        "timestamp": "2026-07-23T11:03:34.85822029",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
