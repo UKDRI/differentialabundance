@@ -720,6 +720,7 @@ render_biotype_plot <- function(combined) {
         annotation = combined,
         category   = "Gene biotype",
         fill       = "Direction",
+        ylab       = "Number of differentially expressed genes",
         title      = "Differentially expressed genes by gene biotype and direction"
     )))
     cat("\n")
@@ -1237,16 +1238,25 @@ The following plots show the abundance value distributions of input matrices. A 
 #### Box plots
 
 ```{r exploratory-boxplots, echo=FALSE, fig.height=8, eval=!module_disabled("boxplot")}
-boxplot <- static_boxplot(
+# Name the outlier-point hover as "gene name (gene id)" where a name is available.
+boxplot_labels <- NULL
+if (features_provided && !is.null(p$features_name_col) && p$features_name_col %in% colnames(features)) {
+    id_vals <- if (p$features_id_col %in% colnames(features)) features[[p$features_id_col]] else rownames(features)
+    nm      <- as.character(features[[p$features_name_col]])
+    boxplot_labels <- set_names(
+        ifelse(is.na(nm) | nm == "" | nm == id_vals, id_vals, paste0(nm, " (", id_vals, ")")),
+        id_vals
+    )
+}
+interactive_boxplot(
     assay_data,
     experiment       = observations,
     colorby          = main_grouping_variable,
     expressiontype   = paste("count per", p$features_type),
     palette          = groupColorScale,
     whisker_distance = p$exploratory_whisker_distance,
-    base_size        = 8
+    labels           = boxplot_labels
 )
-boxplot
 ```
 
 Whiskers in the above boxplots show `{r} p$exploratory_whisker_distance` times the inter-quartile range.
