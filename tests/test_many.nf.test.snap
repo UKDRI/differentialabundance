@@ -74,19 +74,19 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "UNTAR": {
                     "untar": 1.34
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -446,7 +446,7 @@
                 "GSM1229348_Gudjohnsson_008_8470_PN.CEL.gz:md5,ec5129e035badf3b670178d53e24f0cc"
             ]
         ],
-        "timestamp": "2026-07-23T11:30:27.740927342",
+        "timestamp": "2026-07-28T19:16:51.276897128",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"

@@ -35,16 +35,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -145,7 +145,7 @@
                 "all.normalised_counts.tsv:md5,534f0f37e10325163656cad95418f34a"
             ]
         ],
-        "timestamp": "2026-07-23T11:00:11.424368867",
+        "timestamp": "2026-07-28T18:41:01.633948523",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -192,16 +192,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -556,7 +556,7 @@
                 "all.normalised_counts.tsv:md5,ebe30cc05e93aea1f04ee8598ec62c94"
             ]
         ],
-        "timestamp": "2026-07-23T10:57:38.194982394",
+        "timestamp": "2026-07-28T18:38:42.043246275",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -603,16 +603,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -751,7 +751,7 @@
                 "all.normalised_counts.tsv:md5,fd122dfc7ebc8d468075092f5cecb523"
             ]
         ],
-        "timestamp": "2026-07-23T11:01:52.463572841",
+        "timestamp": "2026-07-28T18:42:40.145882663",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -792,16 +792,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -892,7 +892,7 @@
                 "all.normalised_counts.tsv:md5,534f0f37e10325163656cad95418f34a"
             ]
         ],
-        "timestamp": "2026-07-23T10:54:05.623073861",
+        "timestamp": "2026-07-28T18:35:11.782462401",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -939,16 +939,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -1087,7 +1087,7 @@
                 "all.normalised_counts.tsv:md5,534f0f37e10325163656cad95418f34a"
             ]
         ],
-        "timestamp": "2026-07-23T10:52:28.432974915",
+        "timestamp": "2026-07-28T18:33:36.308832679",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"

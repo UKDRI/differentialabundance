@@ -40,16 +40,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -194,7 +194,7 @@
                 "all.vst.tsv:md5,ae82509f76ed01ad0d041d1a62aef703"
             ]
         ],
-        "timestamp": "2026-07-23T10:26:58.249533611",
+        "timestamp": "2026-07-28T18:08:42.889494365",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -235,16 +235,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -412,7 +412,7 @@
                 "all.rlog.tsv:md5,bce2521996537372c72f4083f66c5d3b"
             ]
         ],
-        "timestamp": "2026-07-23T10:31:21.124367019",
+        "timestamp": "2026-07-28T18:13:02.785650322",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -453,16 +453,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -568,7 +568,7 @@
                 "all.vst.tsv:md5,e47e97c11a3d8a980765dd2fd5d45c66"
             ]
         ],
-        "timestamp": "2026-07-23T10:35:10.71259933",
+        "timestamp": "2026-07-28T18:16:48.042578684",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -615,16 +615,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -769,7 +769,7 @@
                 "all.vst.tsv:md5,e47e97c11a3d8a980765dd2fd5d45c66"
             ]
         ],
-        "timestamp": "2026-07-23T10:33:17.438758962",
+        "timestamp": "2026-07-28T18:14:56.635828111",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -810,16 +810,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -925,7 +925,7 @@
                 "all.vst.tsv:md5,ae82509f76ed01ad0d041d1a62aef703"
             ]
         ],
-        "timestamp": "2026-07-23T10:28:50.497460738",
+        "timestamp": "2026-07-28T18:10:33.538143571",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"

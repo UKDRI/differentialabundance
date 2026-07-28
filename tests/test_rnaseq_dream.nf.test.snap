@@ -20,16 +20,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -105,7 +105,7 @@
                 "treatment_plus_genotype_SRP254919_dream.annotated.tsv:md5,05ed9864e4fcec606c3061fcf827e43f"
             ]
         ],
-        "timestamp": "2026-07-23T10:41:32.974693333",
+        "timestamp": "2026-07-28T18:22:54.911934969",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -137,16 +137,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -235,7 +235,7 @@
                 "all.normalised_counts.tsv:md5,511d248c74bd9c7c9189c0ce8543366b"
             ]
         ],
-        "timestamp": "2026-07-23T10:38:42.37472274",
+        "timestamp": "2026-07-28T18:20:07.822058109",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -274,16 +274,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -378,7 +378,7 @@
                 "all.normalised_counts.tsv:md5,bc131fb2bfd3eae64b651f3480bd120a"
             ]
         ],
-        "timestamp": "2026-07-23T10:50:42.69781146",
+        "timestamp": "2026-07-28T18:31:51.462509554",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -417,16 +417,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -559,7 +559,7 @@
                 "all.normalised_counts.tsv:md5,511d248c74bd9c7c9189c0ce8543366b"
             ]
         ],
-        "timestamp": "2026-07-23T10:48:21.278075681",
+        "timestamp": "2026-07-28T18:29:30.482941783",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -586,10 +586,10 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VARIANCEPARTITION_DREAM": {
                     "r-base": "4.3.3",
@@ -649,7 +649,7 @@
                 "zero_intercept_model_2_SRP254919_dream.annotated.tsv:md5,ae3f790512810cf58e86ec31f28b7d4b"
             ]
         ],
-        "timestamp": "2026-07-23T10:44:20.919728252",
+        "timestamp": "2026-07-28T18:25:40.461858426",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"

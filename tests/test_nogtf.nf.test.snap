@@ -22,16 +22,16 @@
                     "bioconductor-deseq2": "1.34.0"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "3.2.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -110,7 +110,7 @@
                 "all.vst.tsv:md5,f25a3a95044074ed2164d155fbdb9571"
             ]
         ],
-        "timestamp": "2026-07-23T11:22:32.737218393",
+        "timestamp": "2026-07-28T19:07:17.77170817",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
