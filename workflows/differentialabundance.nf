@@ -785,23 +785,38 @@ workflow DIFFERENTIALABUNDANCE {
             [meta, contrast_file]
         }
 
+    // GSEA report tables grouped per paramset, so enrichment can be baked into
+    // the shinyngs app object (shinyngs >= 3.1 --enrichment_* options).
+    ch_gsea_reports = prepareModuleOutput(DIFFERENTIAL_FUNCTIONAL_ENRICHMENT.out.gsea_report_tsv, ch_paramsets, ['functional_method'], true)
+        .map { key, _meta, ref_tsv, target_tsv -> [key, [ref_tsv, target_tsv]] }
+        .groupTuple()
+        .map { key, report_lists -> [key, report_lists.flatten()] }   // [ key, [ gsea report tsvs ] ]
+
     // Parse input for shinyngs app
     ch_shinyngs_input = differential_with_contrast_shinyngs.differential_results
         .join(ch_contrasts_sorted_shinyngs)
         .join(ch_all_matrices)
+        .join(ch_gene_sets)                       // [ ..., [ gmt files ] ] - inner; every paramset has an entry
+        .join(ch_gsea_reports, remainder: true)   // [ ..., [ gsea report tsvs ] ] - left-outer; only gsea paramsets have an entry
         .filter { row ->
-            row[0].params.shinyngs_build_app
+            // row[2] (differential results) is null only for gsea-only rows the
+            // remainder join can emit for paramsets that build no app
+            row[2] != null && row[0].params.shinyngs_build_app
         }
-        .multiMap { meta, meta_with_contrast, differential_results, contrast_file, samplesheet, features, matrices ->
+        .multiMap { meta, meta_with_contrast, differential_results, contrast_file, samplesheet, features, matrices, gene_sets, enrichment_results ->
             matrices: [meta, samplesheet, features, matrices]
             contrasts_and_differential: [meta, contrast_file, differential_results]
             contrast_stats_assay: meta.params.exploratory_assay_names.split(',').findIndexOf { it == meta.params.exploratory_final_assay } + 1
+            gene_sets: gene_sets
+            enrichment_results: enrichment_results ?: []
         }
 
     SHINYNGS_APP(
         ch_shinyngs_input.matrices,    // meta, samples, features, [  matrices ]
         ch_shinyngs_input.contrasts_and_differential,   // meta, contrast file, [ differential results ]
-        ch_shinyngs_input.contrast_stats_assay
+        ch_shinyngs_input.contrast_stats_assay,
+        ch_shinyngs_input.gene_sets,             // [ gmt files ] (empty when no gene sets)
+        ch_shinyngs_input.enrichment_results     // [ gsea report tsvs ] (empty when no gsea)
     )
 
     // ========================================================================

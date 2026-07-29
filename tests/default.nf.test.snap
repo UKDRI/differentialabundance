@@ -40,16 +40,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -182,7 +182,7 @@
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_hND6.tsv:md5,47e74b77bb66192ed261e6b9cbc34182",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_mCherry.tsv:md5,ce8792382ae299749445767ff16aaecc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.ranked_gene_list_hND6_versus_mCherry.tsv:md5,743631dcbded4348cdff044d9fdee76f",
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "treatment_mCherry_hND6__SRP254919.deseq2.results.tsv:md5,70697a5f2d06f36a1aa13f9d026bffa0",
                 "treatment_mCherry_hND6__SRP254919.deseq2.results_filtered.tsv:md5,8ee88632bb1960094d1ad52d8929fd8c",
@@ -194,7 +194,7 @@
                 "all.vst.tsv:md5,cba6236668ad089ba9bbaa9801d5b329"
             ]
         ],
-        "timestamp": "2026-05-21T20:51:08.409353085",
+        "timestamp": "2026-07-28T18:06:44.194426497",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -241,16 +241,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -383,7 +383,7 @@
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_hND6.tsv:md5,a758fe7e37b971e2a836f28a57d7c3fc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_mCherry.tsv:md5,ce8792382ae299749445767ff16aaecc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.ranked_gene_list_hND6_versus_mCherry.tsv:md5,d71f1db7288800d611fbd623d57c1765",
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "treatment_mCherry_hND6__SRP254919.deseq2.results.tsv:md5,a6dde65d9e54e8e80e3abf3c14f72d34",
                 "treatment_mCherry_hND6__SRP254919.deseq2.results_filtered.tsv:md5,fd803a83c641e843830057f3a43be27a",
@@ -395,7 +395,7 @@
                 "all.vst.tsv:md5,ae82509f76ed01ad0d041d1a62aef703"
             ]
         ],
-        "timestamp": "2026-05-21T20:44:51.256248409",
+        "timestamp": "2026-07-28T18:01:02.341885146",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -442,16 +442,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -584,7 +584,7 @@
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_hND6.tsv:md5,a758fe7e37b971e2a836f28a57d7c3fc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_mCherry.tsv:md5,ce8792382ae299749445767ff16aaecc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.ranked_gene_list_hND6_versus_mCherry.tsv:md5,d71f1db7288800d611fbd623d57c1765",
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "treatment_mCherry_hND6__SRP254919.deseq2.results.tsv:md5,a6dde65d9e54e8e80e3abf3c14f72d34",
                 "treatment_mCherry_hND6__SRP254919.deseq2.results_filtered.tsv:md5,fd803a83c641e843830057f3a43be27a",
@@ -596,7 +596,7 @@
                 "all.vst.tsv:md5,ae82509f76ed01ad0d041d1a62aef703"
             ]
         ],
-        "timestamp": "2026-05-21T20:46:57.48210411",
+        "timestamp": "2026-07-28T18:02:55.938242415",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"
@@ -643,16 +643,16 @@
                     "gunzip": 1.13
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -786,7 +786,7 @@
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_hND6.tsv:md5,a758fe7e37b971e2a836f28a57d7c3fc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_mCherry.tsv:md5,ce8792382ae299749445767ff16aaecc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.ranked_gene_list_hND6_versus_mCherry.tsv:md5,d71f1db7288800d611fbd623d57c1765",
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "treatment_mCherry_hND6__SRP254919.deseq2.results.tsv:md5,a6dde65d9e54e8e80e3abf3c14f72d34",
                 "treatment_mCherry_hND6__SRP254919.deseq2.results_filtered.tsv:md5,fd803a83c641e843830057f3a43be27a",
@@ -798,7 +798,7 @@
                 "all.vst.tsv:md5,ae82509f76ed01ad0d041d1a62aef703"
             ]
         ],
-        "timestamp": "2026-05-21T20:49:03.018298248",
+        "timestamp": "2026-07-28T18:04:49.937849218",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.1"

@@ -35,16 +35,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -126,7 +126,7 @@
                 "tables/processed_abundance/rnaseq_limma_decoupler/all.normalised_counts.tsv"
             ],
             [
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "limma_treatment_mCherry_hND6__SRP254919_consensus_estimate_decoupler.tsv:md5,45c9b4e84fc3f4f8877518790d861ce5",
                 "limma_treatment_mCherry_hND6__SRP254919_consensus_pvals_decoupler.tsv:md5,86e4c564b93df16fc512c5dbe02ad16c",
@@ -145,10 +145,10 @@
                 "all.normalised_counts.tsv:md5,534f0f37e10325163656cad95418f34a"
             ]
         ],
-        "timestamp": "2026-06-18T19:48:25.608806406",
+        "timestamp": "2026-07-28T18:41:01.633948523",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     },
     "Test rnaseq limma profile - rnaseq_limma_gsea - with formula and complex contrasts": {
@@ -192,16 +192,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -539,7 +539,7 @@
                 "treatment_effect_classic_comparison_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_Control.tsv:md5,b40f15ab0aa3fc8f16f837fccc402f17",
                 "treatment_effect_classic_comparison_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_Treated.tsv:md5,d78ba7e3ceef0769b8b639b917db54fa",
                 "treatment_effect_classic_comparison_SRP254919.mh.all.v2022.1.Mm.symbols.ranked_gene_list_Treated_versus_Control.tsv:md5,b426dcc9e9a977168f27ecd429c25585",
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "full_model_with_interactions_SRP254919.limma.results.tsv:md5,d9a97a42238ddbae2b137fc3df939dc4",
                 "full_model_with_interactions_SRP254919.limma.results_filtered.tsv:md5,0bfc9215edc6aad064c3ce6abc81bfce",
@@ -556,10 +556,10 @@
                 "all.normalised_counts.tsv:md5,ebe30cc05e93aea1f04ee8598ec62c94"
             ]
         ],
-        "timestamp": "2026-06-16T16:42:05.401181897",
+        "timestamp": "2026-07-28T18:38:42.043246275",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     },
     "Test rnaseq limma profile - rnaseq_limma_gsea - Numeric sample IDs": {
@@ -603,16 +603,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -740,7 +740,7 @@
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_hND6.tsv:md5,89be43ef72d83fed4966a82b40540710",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_mCherry.tsv:md5,ce8792382ae299749445767ff16aaecc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.ranked_gene_list_hND6_versus_mCherry.tsv:md5,d03318a51f4742890c239f8119ea4040",
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "treatment_mCherry_hND6__SRP254919.limma.results.tsv:md5,e44a3f1f7edea37ed356d120a6a52a52",
                 "treatment_mCherry_hND6__SRP254919.limma.results_filtered.tsv:md5,0bfc9215edc6aad064c3ce6abc81bfce",
@@ -751,10 +751,10 @@
                 "all.normalised_counts.tsv:md5,fd122dfc7ebc8d468075092f5cecb523"
             ]
         ],
-        "timestamp": "2026-06-16T16:48:07.092562537",
+        "timestamp": "2026-07-28T18:42:40.145882663",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     },
     "Test rnaseq limma profile - rnaseq_limma_gprofiler2": {
@@ -792,16 +792,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -879,7 +879,7 @@
                 "tables/processed_abundance/rnaseq_limma_gprofiler2/all.normalised_counts.tsv"
             ],
             [
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "treatment_mCherry_hND6__SRP254919.limma.results.tsv:md5,e44a3f1f7edea37ed356d120a6a52a52",
                 "treatment_mCherry_hND6__SRP254919.limma.results_filtered.tsv:md5,0bfc9215edc6aad064c3ce6abc81bfce",
@@ -892,10 +892,10 @@
                 "all.normalised_counts.tsv:md5,534f0f37e10325163656cad95418f34a"
             ]
         ],
-        "timestamp": "2026-06-16T16:37:16.401890748",
+        "timestamp": "2026-07-28T18:35:11.782462401",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     },
     "Test rnaseq limma profile - rnaseq_limma_gsea": {
@@ -939,16 +939,16 @@
                     "bioconductor-limma": "3.58.1"
                 },
                 "PLOT_DIFFERENTIAL": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "PLOT_EXPLORATORY": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "SHINYNGS_APP": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "VALIDATOR": {
-                    "shinyngs": "2.4.0"
+                    "shinyngs": "3.2.1"
                 },
                 "Workflow": {
                     "nf-core/differentialabundance": "v2.0.0"
@@ -1076,7 +1076,7 @@
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_hND6.tsv:md5,89be43ef72d83fed4966a82b40540710",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.gsea_report_for_mCherry.tsv:md5,ce8792382ae299749445767ff16aaecc",
                 "treatment_mCherry_hND6_sample_number_SRP254919.mh.all.v2022.1.Mm.symbols.ranked_gene_list_hND6_versus_mCherry.tsv:md5,d03318a51f4742890c239f8119ea4040",
-                "app.R:md5,bedcfc45b6cdcc2b8fe3627987e2b17a",
+                "app.R:md5,1e02e7b6d263199c3f45891b3126a3ca",
                 "SRP254919.anno.tsv:md5,c1d7f21e64bd00f845ec6545c123a1fb",
                 "treatment_mCherry_hND6__SRP254919.limma.results.tsv:md5,e44a3f1f7edea37ed356d120a6a52a52",
                 "treatment_mCherry_hND6__SRP254919.limma.results_filtered.tsv:md5,0bfc9215edc6aad064c3ce6abc81bfce",
@@ -1087,10 +1087,10 @@
                 "all.normalised_counts.tsv:md5,534f0f37e10325163656cad95418f34a"
             ]
         ],
-        "timestamp": "2026-06-16T16:34:49.686797897",
+        "timestamp": "2026-07-28T18:33:36.308832679",
         "meta": {
             "nf-test": "0.9.5",
-            "nextflow": "26.04.0"
+            "nextflow": "26.04.1"
         }
     }
 }
