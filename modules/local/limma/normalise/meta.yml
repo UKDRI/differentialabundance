@@ -1,0 +1,85 @@
+name: "limma_normalise"
+description: Normalises an abundance matrix between samples with limma, for
+  DIA mass-spectrometry proteomics
+keywords:
+  - normalisation
+  - proteomics
+  - mass spectrometry
+  - dia
+  - limma
+  - vsn
+tools:
+  - "limma":
+      description: "Linear Models for Microarray and Omics Data"
+      homepage: "https://bioconductor.org/packages/release/bioc/html/limma.html"
+      documentation: "https://bioconductor.org/packages/release/bioc/vignettes/limma/inst/doc/usersguide.pdf"
+      tool_dev_url: "https://bioinf.wehi.edu.au/limma/"
+      doi: "10.1093/nar/gkv007"
+      licence:
+        - "GPL >=2"
+      identifier: biotools:limma
+  - "vsn":
+      description: "Variance stabilisation and calibration for microarray and
+        omics data"
+      homepage: "https://bioconductor.org/packages/release/bioc/html/vsn.html"
+      documentation: "https://bioconductor.org/packages/release/bioc/vignettes/vsn/inst/doc/A-vsn.html"
+      tool_dev_url: "https://github.com/wolfganghuber/vsn"
+      doi: "10.1093/bioinformatics/18.suppl_1.S96"
+      licence:
+        - "Artistic-2.0"
+      identifier: biotools:vsn
+input:
+  - - meta:
+        type: map
+        description: |
+          Groovy Map containing study-wide metadata related to the abundance
+          matrix, e.g. [ id:'test' ]
+    - matrix:
+        type: file
+        description: |
+          TSV or CSV format abundance matrix with features by row and samples
+          by column. The first column holds the feature identifier, all
+          remaining columns are numeric intensities and may contain NA.
+        ontologies: []
+output:
+  normalised:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing study-wide metadata related to the abundance
+            matrix, e.g. [ id:'test' ]
+      - "*.normalised.tsv":
+          type: file
+          description: |
+            TSV-format normalised abundance matrix with features by row and
+            samples by column, feature identifier in the first column
+          pattern: "*.normalised.tsv"
+          ontologies:
+            - edam: http://edamontology.org/format_3475
+  session_info:
+    - - meta:
+          type: map
+          description: |
+            Groovy Map containing study-wide metadata related to the abundance
+            matrix, e.g. [ id:'test' ]
+      - "*.R_sessionInfo.log":
+          type: file
+          description: dump of R SessionInfo
+          pattern: "*.log"
+          ontologies: []
+  versions:
+    - versions.yml:
+        type: file
+        description: File containing software versions
+        pattern: "versions.yml"
+        ontologies:
+          - edam: http://edamontology.org/format_3750
+topics:
+  versions:
+    - versions.yml:
+        type: string
+        description: The name of the process
+authors:
+  - "@nikolaihecker"
+maintainers:
+  - "@nikolaihecker"

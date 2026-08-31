@@ -76,6 +76,9 @@ workflow NFCORE_DIFFERENTIALABUNDANCE {
     // Preprocessing: GTF
     gtf_annotation             = DIFFERENTIALABUNDANCE.out.gtf_annotation
 
+    // Preprocessing: Normalisation
+    normalised_abundance       = DIFFERENTIALABUNDANCE.out.normalised_abundance
+
     // Differential
     diff_results               = DIFFERENTIALABUNDANCE.out.diff_results
     diff_results_filtered      = DIFFERENTIALABUNDANCE.out.diff_results_filtered
@@ -207,6 +210,7 @@ workflow {
         .mix(out.geo_annotation.map             { meta, file -> ['geo_annotation', meta, file] })
         .mix(out.geo_rds.map                    { meta, file -> ['geo_rds', meta, file] })
         .mix(out.gtf_annotation.map             { meta, file -> ['gtf_annotation', meta, file] })
+        .mix(out.normalised_abundance.map       { meta, file -> ['normalised_abundance', meta, file] })
 
     ch_pub_differential = out.diff_results.map              { _key, meta, file -> ['results', meta, file] }
         .mix(out.diff_results_filtered.map  { _key, meta, file -> ['results_filtered', meta, file] })
@@ -298,6 +302,9 @@ output {
 
                 // GTF
                 gtf_annotation             : 'tables/annotation',
+
+                // NORMALISATION
+                normalised_abundance       : 'tables/processed_abundance',
 
             ][name] ?: name
             def target = (name in ['proteus_plots', 'proteus_raw_rdata', 'proteus_norm_rdata']) \

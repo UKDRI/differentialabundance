@@ -350,6 +350,23 @@
             },
             "fa_icon": "fas fa-table"
         },
+        "preprocessing_normalisation": {
+            "title": "[preprocessing] Normalisation",
+            "type": "object",
+            "description": "Options related to normalisation of the abundance matrix upstream of differential analysis",
+            "default": "",
+            "properties": {
+                "normalisation_method": {
+                    "type": "string",
+                    "default": "none",
+                    "description": "Between-array normalisation to apply to the abundance matrix before differential analysis.",
+                    "help_text": "When set to anything other than 'none', the filtered abundance matrix is log2-transformed and then passed to limma's `normalizeBetweenArrays()` with the chosen method, and the result is used as input to the differential analysis. 'scale' is the median-scaling method usually called 'median normalisation' in proteomics. 'quantile' forces identical distributions across samples, and 'cyclicloess' applies pairwise loess normalisation. 'vsn' log-transforms internally, so the matrix is not pre-logged for that method. Use this for raw intensity matrices such as a DIA-NN protein-group matrix; leave it at 'none' for matrices that are already on an appropriate scale.",
+                    "enum": ["none", "scale", "quantile", "cyclicloess", "vsn"],
+                    "fa_icon": "fas fa-balance-scale"
+                }
+            },
+            "fa_icon": "fas fa-balance-scale"
+        },
         "preprocessing_filtering": {
             "title": "[preprocessing] Filtering",
             "type": "object",
@@ -1463,6 +1480,9 @@
         },
         {
             "$ref": "#/$defs/preprocessing_proteus_input_options"
+        },
+        {
+            "$ref": "#/$defs/preprocessing_normalisation"
         },
         {
             "$ref": "#/$defs/preprocessing_filtering"

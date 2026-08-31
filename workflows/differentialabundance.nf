@@ -31,6 +31,7 @@ include { PROTEUS_READPROTEINGROUPS as PROTEUS              } from '../modules/n
 include { GEOQUERY_GETGEO                                   } from '../modules/nf-core/geoquery/getgeo/main'
 include { ZIP as MAKE_REPORT_BUNDLE                         } from '../modules/nf-core/zip/main'
 include { CSVTK_JOIN                                        } from '../modules/nf-core/csvtk/join/main'
+include { LIMMA_NORMALISE                                   } from '../modules/local/limma/normalise/main'
 include { softwareVersionsToYAML                            } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 
 //
@@ -454,10 +455,30 @@ workflow DIFFERENTIALABUNDANCE {
     ch_filter_thresholds = prepareModuleOutput(CUSTOM_MATRIXFILTER.out.thresholds, ch_paramsets)
 
     // ========================================================================
+    // Normalise matrix
+    // ========================================================================
+
+    // Paramsets asking for a between-array normalisation (e.g. DIA mass
+    // spectrometry intensities) get their filtered matrix log2-transformed and
+    // normalised before differential analysis; the rest pass through unchanged.
+
+    ch_matrix_to_normalise = ch_filtered_matrix
+        .branch { meta, _matrix ->
+            normalise: meta.params.normalisation_method && meta.params.normalisation_method != 'none'
+            as_is: true
+        }
+
+    LIMMA_NORMALISE( prepareModuleInput(ch_matrix_to_normalise.normalise, 'preprocessing') )
+    ch_normalised_matrix = prepareModuleOutput(LIMMA_NORMALISE.out.normalised, ch_paramsets)
+
+    ch_matrix_for_differential_input = ch_matrix_to_normalise.as_is
+        .mix(ch_normalised_matrix)
+
+    // ========================================================================
     // Differential analysis
     // ========================================================================
 
-    ch_differential_input = ch_filtered_matrix
+    ch_differential_input = ch_matrix_for_differential_input
         .join(ch_validated_samplemeta)
         .join(ch_transcript_lengths)
         .join(ch_control_features)
@@ -531,9 +552,13 @@ workflow DIFFERENTIALABUNDANCE {
     // - from differential analysis for RNASeq
     // - from normalisedvalidated assays for Affy and MaxQuant
     // - from validated assays for GEO soft file
+    // - from LIMMA_NORMALISE for paramsets that requested an explicit normalisation;
+    //   those are excluded from the differential-derived arm, which would otherwise
+    //   contribute a second 'normalised' matrix for the same paramset
 
     ch_norm = ch_differential_norm
-        .filter{meta, matrix -> meta.params.study_type in ['rnaseq', 'generic_matrix']}
+        .filter{meta, matrix -> meta.params.study_type in ['rnaseq', 'generic_matrix'] && !(meta.params.normalisation_method && meta.params.normalisation_method != 'none')}
+        .mix(ch_normalised_matrix)
         .mix(ch_multi_validated_assays.normalised)
         .mix(ch_validated_assays.filter{meta, assay -> meta.params.study_type == 'geo_soft_file'})
 
@@ -973,6 +998,9 @@ workflow DIFFERENTIALABUNDANCE {
 
     // --- Preprocessing: GTF ---
     gtf_annotation             = ch_gtf_features
+
+    // --- Preprocessing: Normalisation ---
+    normalised_abundance       = ch_normalised_matrix
 
     // --- Differential ---
     diff_results               = ch_differential_results

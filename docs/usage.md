@@ -150,6 +150,41 @@ As with RNA-seq input, the matrix should have features as rows and observations 
 
 For mixed-effects models, use `-profile generic_matrix_dream` instead, which runs DREAM rather than Limma.
 
+### DIA mass spectrometry
+
+```bash
+-profile mass_spec
+--matrix '[path to protein group matrix].(csv|tsv)'
+--normalisation_method '[none|scale|quantile|cyclicloess|vsn]'
+```
+
+Use this profile for label-free data-independent acquisition (DIA) proteomics, where the input is a raw protein-level intensity matrix such as the `report.pg_matrix.tsv` written by DIA-NN. Unlike `generic_matrix`, the matrix is _not_ assumed to be on an appropriate scale: it is log2-transformed and normalised between samples before differential analysis.
+
+Supply the protein group matrix with `--matrix`, with proteins as rows and one column per run. A DIA-NN protein group matrix carries several annotation columns (`Protein.Group`, `Protein.Ids`, `Protein.Names`, `Genes`, `First.Protein.Description`) ahead of the intensity columns. The profile uses `Genes` as the feature identifier because it is the column that is both unique per protein group in a typical report and directly usable for downstream annotation and gene set enrichment; the run columns must match the observation identifiers in your samplesheet. If your matrix uses a different identifier column, override `--features_id_col`, `--features_name_col`, `--features_metadata_cols` and `--differential_feature_id_column` together.
+
+The profile also sets `--filtering_min_abundance false` (an intensity threshold is not meaningful before normalisation) and keeps `--filtering_min_proportion_not_na 0.5`, so a protein must be quantified in at least half of the observations to be retained.
+
+`--normalisation_method` selects the between-array normalisation applied by limma's `normalizeBetweenArrays()`:
+
+- `none`: no normalisation; the matrix is passed through unchanged, as with `generic_matrix`.
+- `scale`: scales the columns to a common median. This is the method usually called "median normalisation" in proteomics.
+- `quantile` (the profile default): forces the intensity distributions of all observations to be identical.
+- `cyclicloess`: applies loess normalisation to all pairs of observations in turn. This is the most aggressive option and the slowest, but it can correct intensity-dependent biases that a single scaling factor cannot.
+- `vsn`: variance-stabilising normalisation. `vsn` performs its own generalised-log transformation internally, so the matrix is passed to it unlogged rather than being log2-transformed first.
+
+Both the raw and the normalised matrix are reported as the `raw` and `normalised` assays, so the exploratory plots show the effect of the normalisation directly.
+
+To compare normalisation methods, do not try to set several in one run. Use the paramsheet multi-run mode described under [Analysis modes](#analysis-modes), with one paramset per method; they are run side by side and reported separately:
+
+```yaml
+- paramset_name: mass_spec_quantile
+  study_type: generic_matrix
+  normalisation_method: quantile
+- paramset_name: mass_spec_vsn
+  study_type: generic_matrix
+  normalisation_method: vsn
+```
+
 ### Affymetrix microarrays
 
 ```bash

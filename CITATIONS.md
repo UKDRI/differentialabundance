@@ -84,6 +84,10 @@
 
   > Hoffman GE, Roussos P. Dream: powerful differential expression analysis for repeated measures designs. Bioinformatics. 2021 Apr 19;37(2):192-201. doi: 10.1093/bioinformatics/btaa687. PubMed PMID: 32730587; PubMed Central PMCID: PMC8055218.
 
+- [vsn](https://pubmed.ncbi.nlm.nih.gov/12169536/)
+
+  > Huber W, von Heydebreck A, Sultmann H, Poustka A, Vingron M. Variance stabilization applied to microarray data calibration and to the quantification of differential expression. Bioinformatics. 2002;18 Suppl 1:S96-104. doi: 10.1093/bioinformatics/18.suppl_1.S96. PubMed PMID: 12169536.
+
 ## Software packaging/containerisation tools
 
 - [Anaconda](https://anaconda.com)
