@@ -156,6 +156,7 @@ For mixed-effects models, use `-profile generic_matrix_dream` instead, which run
 -profile mass_spec
 --matrix '[path to protein group matrix].(csv|tsv)'
 --normalisation_method '[none|scale|quantile|cyclicloess|vsn]'
+--normalisation_pseudocount '[integer, default 1]'
 ```
 
 Use this profile for label-free data-independent acquisition (DIA) proteomics, where the input is a raw protein-level intensity matrix such as the `report.pg_matrix.tsv` written by DIA-NN. Unlike `generic_matrix`, the matrix is _not_ assumed to be on an appropriate scale: it is log2-transformed and normalised between samples before differential analysis.
@@ -171,6 +172,8 @@ The profile also sets `--filtering_min_abundance false` (an intensity threshold 
 - `quantile` (the profile default): forces the intensity distributions of all observations to be identical.
 - `cyclicloess`: applies loess normalisation to all pairs of observations in turn. This is the most aggressive option and the slowest, but it can correct intensity-dependent biases that a single scaling factor cannot.
 - `vsn`: variance-stabilising normalisation. `vsn` performs its own generalised-log transformation internally, so the matrix is passed to it unlogged rather than being log2-transformed first.
+
+`--normalisation_pseudocount` sets the offset used by that log2 transformation, which is applied as `log2(x + pseudocount)`. It defaults to `1`, which keeps zeros finite. Set it to `0` for a plain `log2(x)`; the matrix must then contain no zero or negative values, or the run fails with an explicit error. `log2(0)` is `-Inf`, and because quantile normalisation averages order statistics across samples, a single `-Inf` would propagate to every sample at that rank rather than staying in its own cell. The offset is not something limma itself requires, which is why it is left to you to choose. It is ignored for `vsn`, which receives the raw unlogged matrix.
 
 Both the raw and the normalised matrix are reported as the `raw` and `normalised` assays, so the exploratory plots show the effect of the normalisation directly.
 

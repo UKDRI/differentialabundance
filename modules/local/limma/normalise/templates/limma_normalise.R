@@ -75,6 +75,7 @@ opt <- list(
     output_prefix = ifelse('$task.ext.prefix' == 'null', '$meta.id', '$task.ext.prefix'),
     count_file    = '$matrix',
     method        = NULL,
+    pseudocount   = 1L,
     round_digits  = NULL
 )
 opt_types <- lapply(opt, class)
@@ -175,17 +176,32 @@ used_vsn <- FALSE
 
 if (opt\$method %in% c('scale', 'quantile', 'cyclicloess')){
 
-    # These methods operate on log-scale data, so log2-transform first (the +1
-    # offset keeps zeros finite). Note that limma's 'scale' method is the
-    # median-scaling normalisation commonly referred to as "median
-    # normalisation" in proteomics.
+    # normalizeBetweenArrays() documents matrix input as "assumed to contain
+    # log-transformed single-channel data", so log2-transform first. The offset
+    # is configurable via --pseudocount (default 1, which keeps zeros finite);
+    # it is not a limma requirement, so the user decides.
+    #
+    # Bail out rather than emit -Inf/NaN. A single -Inf is not confined to its
+    # own cell: normalizeQuantiles() averages order statistics across columns,
+    # so it would poison that rank for every sample.
 
-    normalised <- normalizeBetweenArrays(log2(intensities + 1), method = opt\$method)
+    if (any(intensities + opt\$pseudocount <= 0, na.rm = TRUE)){
+        stop(paste0(
+            "log2 transformation requires every value plus the pseudocount to be positive, but ",
+            sum(intensities + opt\$pseudocount <= 0, na.rm = TRUE),
+            " value(s) are <= 0 with --pseudocount ", opt\$pseudocount,
+            ". Increase the pseudocount, and ensure that you supplied the correct raw input data."
+        ))
+    }
+
+    normalised <- normalizeBetweenArrays(log2(intensities + opt\$pseudocount), method = opt\$method)
 
 } else if (opt\$method == 'vsn'){
 
-    # normalizeVSN() must be given RAW (un-logged) intensities: vsn applies its
-    # own variance-stabilising glog2 transform internally, so do not pre-log.
+    # normalizeVSN() must be given RAW (un-logged) intensities: its docs state
+    # "the input x should contain raw intensities", and vsn applies its own
+    # variance-stabilising glog2 transform internally. So do not pre-log, and
+    # --pseudocount does not apply here.
 
     if (! requireNamespace('vsn', quietly = TRUE)){
         stop("Method 'vsn' requires the vsn package, which is not installed")

@@ -363,6 +363,14 @@
                     "help_text": "When set to anything other than 'none', the filtered abundance matrix is log2-transformed and then passed to limma's `normalizeBetweenArrays()` with the chosen method, and the result is used as input to the differential analysis. 'scale' is the median-scaling method usually called 'median normalisation' in proteomics. 'quantile' forces identical distributions across samples, and 'cyclicloess' applies pairwise loess normalisation. 'vsn' log-transforms internally, so the matrix is not pre-logged for that method. Use this for raw intensity matrices such as a DIA-NN protein-group matrix; leave it at 'none' for matrices that are already on an appropriate scale.",
                     "enum": ["none", "scale", "quantile", "cyclicloess", "vsn"],
                     "fa_icon": "fas fa-balance-scale"
+                },
+                "normalisation_pseudocount": {
+                    "type": "integer",
+                    "default": 1,
+                    "minimum": 0,
+                    "description": "Offset added before the log2 transformation that precedes between-array normalisation.",
+                    "help_text": "The abundance matrix is transformed as log2(x + pseudocount) before being passed to limma's `normalizeBetweenArrays()`. The default of 1 keeps zeros finite. Set it to 0 for a plain log2(x), which requires a matrix containing no zero or negative values: the module errors out otherwise, because log2(0) is -Inf and `normalizeQuantiles()` averages order statistics across samples, so a single -Inf would propagate to every sample at that rank. This offset is not a limma requirement, which is why it is left to you. It is ignored when `--normalisation_method` is 'vsn', because `normalizeVSN()` requires raw un-logged intensities.",
+                    "fa_icon": "fas fa-plus"
                 }
             },
             "fa_icon": "fas fa-balance-scale"
