@@ -359,9 +359,9 @@
                 "normalisation_method": {
                     "type": "string",
                     "default": "none",
-                    "description": "Between-array normalisation to apply to the abundance matrix before differential analysis.",
-                    "help_text": "When set to anything other than 'none', the filtered abundance matrix is log2-transformed and then passed to limma's `normalizeBetweenArrays()` with the chosen method, and the result is used as input to the differential analysis. 'scale' is the median-scaling method usually called 'median normalisation' in proteomics. 'quantile' forces identical distributions across samples, and 'cyclicloess' applies pairwise loess normalisation. 'vsn' log-transforms internally, so the matrix is not pre-logged for that method. Use this for raw intensity matrices such as a DIA-NN protein-group matrix; leave it at 'none' for matrices that are already on an appropriate scale.",
-                    "enum": ["none", "scale", "quantile", "cyclicloess", "vsn"],
+                    "description": "Between-sample normalisation to apply to the abundance matrix before differential analysis.",
+                    "help_text": "Set this for raw intensity matrices such as a DIA-NN protein-group matrix; leave it at 'none' for matrices already on an appropriate scale. 'median' scales the raw intensities to a common median and then log2-transforms, which is the additive median centring normally meant by 'median normalisation' in proteomics: every feature in a sample shifts by the same amount. 'scale', 'quantile' and 'cyclicloess' instead log2-transform first and pass the result to limma's `normalizeBetweenArrays()`. Of those, 'scale' is limma's scale normalisation, inherited from two-colour M-values, which divides the log2 values to a common median and therefore corrects in proportion to a feature's own abundance rather than uniformly - it is not the same as 'median'. 'quantile' forces identical distributions across samples, and 'cyclicloess' applies pairwise loess normalisation. 'vsn' applies variance-stabilising normalisation via `normalizeVSN()`, which requires raw un-logged intensities and so ignores --normalisation_pseudocount; it needs at least 2 samples and 42 features.",
+                    "enum": ["none", "median", "scale", "quantile", "cyclicloess", "vsn"],
                     "fa_icon": "fas fa-balance-scale"
                 },
                 "normalisation_pseudocount": {

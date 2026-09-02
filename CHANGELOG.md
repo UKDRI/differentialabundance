@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [[#748](https://github.com/nf-core/differentialabundance/pull/748)] - Bake GSEA enrichment results into the shinyngs application object (shinyngs >= 3.1 `--enrichment_*` options). ([@pinin4fjords](https://github.com/pinin4fjords)).
 - [[#748](https://github.com/nf-core/differentialabundance/pull/748)] - Document running the Shiny app from the shinyngs container image, so no local ShinyNGS install is required. ([@pinin4fjords](https://github.com/pinin4fjords)).
-- [[#XXX](https://github.com/nf-core/differentialabundance/pull/XXX)] - Add `--normalisation_method` and `--normalisation_pseudocount` with a `LIMMA_NORMALISE` preprocessing step, applying `log2(x + pseudocount)` plus limma `normalizeBetweenArrays()` (`scale`, `quantile`, `cyclicloess`) or `normalizeVSN()` on raw intensities (`vsn`) to the abundance matrix before differential analysis, plus a `mass_spec` profile for DIA mass spectrometry protein intensity matrices. ([@nikolaihecker](https://github.com/nikolaihecker)).
+- [[#XXX](https://github.com/nf-core/differentialabundance/pull/XXX)] - Add `--normalisation_method` and `--normalisation_pseudocount` with a `LIMMA_NORMALISE` preprocessing step, offering `median` (scale raw intensities to a common median, then log2), limma `normalizeBetweenArrays()` on `log2(x + pseudocount)` (`scale`, `quantile`, `cyclicloess`) and `normalizeVSN()` on raw intensities (`vsn`), applied to the abundance matrix before differential analysis, plus a `mass_spec` profile for DIA mass spectrometry protein intensity matrices which defaults to `vsn`. ([@nikolaihecker](https://github.com/nikolaihecker)).
 
 ### Changed
 

@@ -63,6 +63,29 @@ nullify <- function(x) {
   if (is.character(x) && (tolower(x) == "null" || x == "")) NULL else x
 }
 
+#' log2-transform, refusing input that would produce -Inf or NaN
+#'
+#' A single -Inf is not confined to its own cell: normalizeQuantiles() averages
+#' order statistics across columns, so it would poison that rank for every
+#' sample. Fail loudly instead.
+#'
+#' @param x Numeric matrix
+#' @param pseudocount Offset added before the transformation
+#'
+#' @return log2(x + pseudocount)
+#'
+log2_guarded <- function(x, pseudocount){
+    bad <- sum(x + pseudocount <= 0, na.rm = TRUE)
+    if (bad > 0){
+        stop(paste0(
+            "log2 transformation requires every value plus the pseudocount to be positive, but ",
+            bad, " value(s) are <= 0 with --pseudocount ", pseudocount,
+            ". Increase the pseudocount, and ensure that you supplied the correct raw input data."
+        ))
+    }
+    log2(x + pseudocount)
+}
+
 ################################################
 ################################################
 ## PARSE PARAMETERS FROM NEXTFLOW             ##
@@ -174,27 +197,39 @@ if (! is.numeric(intensities)){
 
 used_vsn <- FALSE
 
-if (opt\$method %in% c('scale', 'quantile', 'cyclicloess')){
+if (opt\$method == 'median'){
+
+    # Median normalisation as understood in proteomics: scale the RAW
+    # intensities to a common median, then log2. On the log scale that is a
+    # per-sample shift, so every feature moves by the same amount and
+    # between-sample log ratios are corrected uniformly across the abundance
+    # range. Contrast limma's 'scale' below, which divides log2 values and so
+    # corrects in proportion to a feature's own abundance.
+    #
+    # This mirrors limma's own EListRaw contract, where normalisation is
+    # applied to the linear matrix "which will then be log2-transformed".
+
+    norm_factors <- apply(intensities, 2, median, na.rm = TRUE)
+
+    if (any(! is.finite(norm_factors)) || any(norm_factors <= 0)){
+        stop("Median normalisation needs a positive, finite median for every sample: check for all-NA or all-zero columns")
+    }
+
+    norm_factors <- norm_factors / mean(norm_factors)
+    normalised   <- log2_guarded(t(t(intensities) / norm_factors), opt\$pseudocount)
+
+} else if (opt\$method %in% c('scale', 'quantile', 'cyclicloess')){
 
     # normalizeBetweenArrays() documents matrix input as "assumed to contain
     # log-transformed single-channel data", so log2-transform first. The offset
     # is configurable via --pseudocount (default 1, which keeps zeros finite);
     # it is not a limma requirement, so the user decides.
     #
-    # Bail out rather than emit -Inf/NaN. A single -Inf is not confined to its
-    # own cell: normalizeQuantiles() averages order statistics across columns,
-    # so it would poison that rank for every sample.
+    # Note that 'scale' is limma's scale normalisation, inherited from
+    # two-colour M-values: it divides the log2 values to a common median, which
+    # is not the additive median centring that 'median' above provides.
 
-    if (any(intensities + opt\$pseudocount <= 0, na.rm = TRUE)){
-        stop(paste0(
-            "log2 transformation requires every value plus the pseudocount to be positive, but ",
-            sum(intensities + opt\$pseudocount <= 0, na.rm = TRUE),
-            " value(s) are <= 0 with --pseudocount ", opt\$pseudocount,
-            ". Increase the pseudocount, and ensure that you supplied the correct raw input data."
-        ))
-    }
-
-    normalised <- normalizeBetweenArrays(log2(intensities + opt\$pseudocount), method = opt\$method)
+    normalised <- normalizeBetweenArrays(log2_guarded(intensities, opt\$pseudocount), method = opt\$method)
 
 } else if (opt\$method == 'vsn'){
 
@@ -212,7 +247,7 @@ if (opt\$method %in% c('scale', 'quantile', 'cyclicloess')){
 } else {
     stop(paste0(
         "Invalid normalisation method '", opt\$method,
-        "'. Valid methods are: scale, quantile, cyclicloess, vsn"
+        "'. Valid methods are: median, scale, quantile, cyclicloess, vsn"
     ))
 }
 

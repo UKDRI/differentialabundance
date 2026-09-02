@@ -155,7 +155,7 @@ For mixed-effects models, use `-profile generic_matrix_dream` instead, which run
 ```bash
 -profile mass_spec
 --matrix '[path to protein group matrix].(csv|tsv)'
---normalisation_method '[none|scale|quantile|cyclicloess|vsn]'
+--normalisation_method '[none|median|scale|quantile|cyclicloess|vsn]'
 --normalisation_pseudocount '[integer, default 1]'
 ```
 
@@ -168,12 +168,13 @@ The profile also sets `--filtering_min_abundance false` (an intensity threshold 
 `--normalisation_method` selects the between-array normalisation applied by limma's `normalizeBetweenArrays()`:
 
 - `none`: no normalisation; the matrix is passed through unchanged, as with `generic_matrix`.
-- `scale`: scales the columns to a common median. This is the method usually called "median normalisation" in proteomics.
-- `quantile` (the profile default): forces the intensity distributions of all observations to be identical.
+- `median`: scales the raw intensities to a common median and then log2-transforms. This is the additive median centring normally meant by "median normalisation" in proteomics: every protein in a sample shifts by the same amount, so between-sample ratios are corrected uniformly across the abundance range.
+- `scale`: log2-transforms first, then divides the log2 values to a common median. This is limma's scale normalisation, inherited from two-colour microarray M-values. It equalises sample medians like `median` does, but because it divides the logs rather than shifting them, the correction is proportional to each protein's own abundance - so it leaves a systematic tilt across the dynamic range. Prefer `median` unless you specifically want limma's behaviour.
+- `quantile`: forces the intensity distributions of all observations to be identical.
 - `cyclicloess`: applies loess normalisation to all pairs of observations in turn. This is the most aggressive option and the slowest, but it can correct intensity-dependent biases that a single scaling factor cannot.
-- `vsn`: variance-stabilising normalisation. `vsn` performs its own generalised-log transformation internally, so the matrix is passed to it unlogged rather than being log2-transformed first.
+- `vsn` (the profile default): variance-stabilising normalisation. `vsn` performs its own generalised-log transformation internally, so the matrix is passed to it unlogged rather than being log2-transformed first. It requires at least 2 samples and 42 features.
 
-`--normalisation_pseudocount` sets the offset used by that log2 transformation, which is applied as `log2(x + pseudocount)`. It defaults to `1`, which keeps zeros finite. Set it to `0` for a plain `log2(x)`; the matrix must then contain no zero or negative values, or the run fails with an explicit error. `log2(0)` is `-Inf`, and because quantile normalisation averages order statistics across samples, a single `-Inf` would propagate to every sample at that rank rather than staying in its own cell. The offset is not something limma itself requires, which is why it is left to you to choose. It is ignored for `vsn`, which receives the raw unlogged matrix.
+`--normalisation_pseudocount` sets the offset used by that log2 transformation, which is applied as `log2(x + pseudocount)`. It defaults to `1`, which keeps zeros finite. Set it to `0` for a plain `log2(x)`; the matrix must then contain no zero or negative values, or the run fails with an explicit error. `log2(0)` is `-Inf`, and because quantile normalisation averages order statistics across samples, a single `-Inf` would propagate to every sample at that rank rather than staying in its own cell. The offset is not something limma itself requires, which is why it is left to you to choose. It is ignored for `vsn`, which receives the raw unlogged matrix - so with the profile default it has no effect unless you also change `--normalisation_method`.
 
 Both the raw and the normalised matrix are reported as the `raw` and `normalised` assays, so the exploratory plots show the effect of the normalisation directly.
 
