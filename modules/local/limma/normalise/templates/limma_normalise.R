@@ -74,7 +74,7 @@ nullify <- function(x) {
 opt <- list(
     output_prefix = ifelse('$task.ext.prefix' == 'null', '$meta.id', '$task.ext.prefix'),
     count_file    = '$matrix',
-    method        = 'quantile',
+    method        = NULL,
     round_digits  = NULL
 )
 opt_types <- lapply(opt, class)
