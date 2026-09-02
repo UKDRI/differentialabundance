@@ -1,0 +1,13 @@
+name: limma_normalise
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  # Pinned to the Bioconductor 3.16 / R 4.2 pairing, which matches the
+  # bioconductor-limma:3.54.0--r42* containers used by the log-normalise
+  # processes. limma and vsn share build strings at these versions, so they are
+  # co-installable. vsn is needed only by LIMMA_NORMALIZE_VSN, but all five
+  # processes in this module share this single environment file.
+  - bioconda::bioconductor-limma=3.54.0
+  - bioconda::bioconductor-vsn=3.66.0

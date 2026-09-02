@@ -366,30 +366,35 @@ workflow DIFFERENTIALABUNDANCE {
             LIMMA_LOG_NORMALIZE_MEDIAN(CUSTOM_MATRIXFILTER.out.filtered)
             ch_norm = LIMMA_LOG_NORMALIZE_MEDIAN.out.normalised
             ch_processed_matrices = ch_norm.map{ it.tail() }.first()
+            ch_versions = ch_versions.mix(LIMMA_LOG_NORMALIZE_MEDIAN.out.versions)
         }
 
         if (limma_norm_methods.contains('scale')) {
             LIMMA_LOG_NORMALIZE_SCALE(CUSTOM_MATRIXFILTER.out.filtered)
             ch_scale = LIMMA_LOG_NORMALIZE_SCALE.out.normalised
             ch_processed_matrices = ch_processed_matrices.combine(ch_scale.map{ it.tail() }.first())
+            ch_versions = ch_versions.mix(LIMMA_LOG_NORMALIZE_SCALE.out.versions)
         }
 
         if (limma_norm_methods.contains('quantile')) {
             LIMMA_LOG_NORMALIZE_QUANTILE(CUSTOM_MATRIXFILTER.out.filtered)
             ch_quantile = LIMMA_LOG_NORMALIZE_QUANTILE.out.normalised
             ch_processed_matrices = ch_processed_matrices.combine( ch_quantile.map{ it.tail() }.first() )
+            ch_versions = ch_versions.mix(LIMMA_LOG_NORMALIZE_QUANTILE.out.versions)
         }
 
         if (limma_norm_methods.contains('cyclic_loess')) {
             LIMMA_LOG_NORMALIZE_CYCLIC(CUSTOM_MATRIXFILTER.out.filtered)
             ch_cyclic = LIMMA_LOG_NORMALIZE_CYCLIC.out.normalised
             ch_processed_matrices = ch_processed_matrices.combine(ch_cyclic.map{ it.tail() }.first())
+            ch_versions = ch_versions.mix(LIMMA_LOG_NORMALIZE_CYCLIC.out.versions)
         }
 
         if (limma_norm_methods.contains('vsn')) {
             LIMMA_NORMALIZE_VSN(CUSTOM_MATRIXFILTER.out.filtered)
             ch_vsn = LIMMA_NORMALIZE_VSN.out.normalised
             ch_processed_matrices = ch_processed_matrices.combine(ch_vsn.map{ it.tail() }.first())
+            ch_versions = ch_versions.mix(LIMMA_NORMALIZE_VSN.out.versions)
         }
 
         // select assay for differential analysis
@@ -410,6 +415,9 @@ workflow DIFFERENTIALABUNDANCE {
         LIMMA_DIFFERENTIAL (ch_contrasts, ch_samples_and_matrix_differential)
         ch_differential = LIMMA_DIFFERENTIAL.out.results
         ch_model = LIMMA_DIFFERENTIAL.out.model
+
+        ch_versions = ch_versions
+            .mix(LIMMA_DIFFERENTIAL.out.versions)
     }
     else {
 
