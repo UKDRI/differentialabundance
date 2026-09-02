@@ -45,7 +45,12 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install nf-core
+          # Keep nf-core pinned. Tools 3.0 restructured the CLI and moved `lint`
+          # under `nf-core pipelines lint`, so an unpinned install resolves to
+          # 4.x and the command below fails with "No such command 'lint'".
+          # setuptools is capped because nf-core 2.x imports pkg_resources,
+          # which setuptools dropped in 81.
+          pip install "setuptools<81" "nf-core==2.14.1"
 
       - name: Run nf-core lint
         env:
