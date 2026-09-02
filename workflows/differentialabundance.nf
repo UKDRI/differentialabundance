@@ -100,6 +100,7 @@ citations_file = file(params.citations_file, checkIfExists: true)
 include { TABULAR_TO_GSEA_CHIP } from '../modules/local/tabular_to_gsea_chip'
 include { FILTER_DIFFTABLE } from '../modules/local/filter_difftable'
 include { LIMMA_LOG_NORMALIZE_MEDIAN } from '../modules/local/limma'
+include { LIMMA_LOG_NORMALIZE_SCALE } from '../modules/local/limma'
 include { LIMMA_LOG_NORMALIZE_QUANTILE } from '../modules/local/limma'
 include { LIMMA_LOG_NORMALIZE_CYCLIC } from '../modules/local/limma'
 include { LIMMA_NORMALIZE_VSN } from '../modules/local/limma'
@@ -367,6 +368,12 @@ workflow DIFFERENTIALABUNDANCE {
             ch_processed_matrices = ch_norm.map{ it.tail() }.first()
         }
 
+        if (limma_norm_methods.contains('scale')) {
+            LIMMA_LOG_NORMALIZE_SCALE(CUSTOM_MATRIXFILTER.out.filtered)
+            ch_scale = LIMMA_LOG_NORMALIZE_SCALE.out.normalised
+            ch_processed_matrices = ch_processed_matrices.combine(ch_scale.map{ it.tail() }.first())
+        }
+
         if (limma_norm_methods.contains('quantile')) {
             LIMMA_LOG_NORMALIZE_QUANTILE(CUSTOM_MATRIXFILTER.out.filtered)
             ch_quantile = LIMMA_LOG_NORMALIZE_QUANTILE.out.normalised
@@ -393,7 +400,9 @@ workflow DIFFERENTIALABUNDANCE {
         } else if (params.exploratory_final_assay == 'variance_stabilised' || params.exploratory_final_assay == 'variance_stabilized' || params.exploratory_final_assay == 'vsn' ) {
             ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_vsn).first() // -> meta, samplesheet, filtered matrix
         } else if (params.exploratory_final_assay == 'normalised' || params.exploratory_final_assay == 'normalized' || params.exploratory_final_assay == 'median')  {
-            ch_sample_matrix_differential = VALIDATOR.out.sample_meta.join(ch_norm).first() // -> meta, samplesheet, filtered matrix
+            ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_norm).first() // -> meta, samplesheet, filtered matrix
+        } else if (params.exploratory_final_assay == 'scale') {
+            ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_scale).first() // -> meta, samplesheet, filtered matrix
         } else {
             ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_raw).first() // -> meta, samplesheet, filtered matrix
         }

@@ -42,28 +42,14 @@ col_names <- colnames(mat)
 ids <- mat[,1]
 mat_data <- as.matrix( mat[,c(2:dim(mat)[2])] )
 
-# median-normalise: scale the raw intensities to a common median, then log2.
-# On the log scale this is a per-sample shift, so every feature moves by the
-# same amount. limma's method='scale' (see normalize_scale.R) instead divides
-# the log2 values, correcting in proportion to a feature's own abundance.
-norm_factors <- apply(mat_data, 2, median, na.rm = TRUE)
-
-# A column that is entirely NA or entirely zero yields an NA or zero median,
-# which would silently produce an all-NA or all-Inf matrix downstream. Check
-# the raw medians before rescaling: one NA would make mean() NA below and so
-# implicate every sample instead of the offending one.
-if (any(!is.finite(norm_factors)) || any(norm_factors <= 0)) {
-    stop(
-        paste(
-            'Cannot median-normalise: non-finite or non-positive median for sample(s):',
-            paste(colnames(mat_data)[!is.finite(norm_factors) | norm_factors <= 0], collapse = ', '),
-            '- check for samples with all-missing or all-zero intensities.'
-        )
-    )
-}
-
-norm_factors <- norm_factors / mean(norm_factors)
-mat_data <- log2( t(t(mat_data) / norm_factors) + 1 )
+# log-normalise data
+# This is limma's scale normalisation: it divides the log2 values by a
+# per-column factor so that the columns share a common median. It is not the
+# same as median centring/normalisation (see normalize_median.R) -- because the
+# log2 values are divided rather than shifted, the correction applied to each
+# feature is proportional to that feature's own abundance.
+mat_data <- log2(mat_data + 1)
+mat_data <- normalizeBetweenArrays(mat_data, method='scale')
 
 mat_norm <- cbind(ids, as.data.frame(mat_data) )
 colnames(mat_norm) <- col_names
@@ -71,7 +57,7 @@ colnames(mat_norm) <- col_names
 # write output
 write.table(
     mat_norm,
-    file = paste(output_prefix, 'lognorm.tsv', sep = '.'),
+    file = paste(output_prefix, 'lognorm_scale.tsv', sep = '.'),
     col.names = TRUE,
     row.names = FALSE,
     sep = '\t',
