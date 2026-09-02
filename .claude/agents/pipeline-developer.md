@@ -52,16 +52,56 @@ write the module so it could be lifted into nf-core/modules unchanged.
   Check the package documentation (use `WebFetch`) for each argument you pass. Before writing
   `normalizeBetweenArrays(x, method = 'cyclicloess')` or `normalizeVSN(x)`, confirm the
   argument names and the return type in the installed limma version — and confirm which
-  functions need a companion package (`normalizeVSN` requires **vsn**, which is *not* in
+  functions need a companion package (`normalizeVSN` requires **vsn**, which is _not_ in
   `limma`'s own dependency set).
 
 - **The template writes `versions.yml`.** A `cat <<-END_VERSIONS` heredoc in `script:` is
   correct only for the rare module that calls a command-line tool instead of a template.
 
 - **`task.ext.args` is used heavily here.** `conf/modules.config` is built almost entirely
-  from `ext.args` closures over `meta.params`, and R templates parse them with the
-  `parse_args()` helper (below). Wire new options through `ext.args`; do not add a new
-  `input:` channel for something that is really a flag.
+  from `ext.args` closures over `meta.params`, and R templates in this repo parse them
+  with the `parse_args()` helper — see the two rules immediately below, which say why that
+  is a local exception rather than a practice to copy. Wire new options through
+  `ext.args`; do not add a new `input:` channel for something that is really a flag.
+
+- **General rule: keep templates as concise as the functionality allows, and use no
+  command-line parser.** A template should read as the analysis it performs, not as a
+  miniature CLI application. Nextflow already substitutes process variables before the
+  script runs, so take values by interpolating them (`method <- '$method'`) or as process
+  inputs. Do not add a parser package (`optparse`, `argparse`, `getopt`) and do not
+  hand-roll one. A parser inserts a layer between `conf/modules.config` and the code in
+  which defaults and requirements can silently disagree — the dead `required_opts` check
+  described below is exactly that failure, and it shipped unnoticed.
+
+- **This fork is a deliberate exception, and the exception stops here.** Every R template
+  in nf-core/differentialabundance already parses `$task.ext.args` with a hand-rolled
+  `parse_args()` helper, so a new module in **this repository** follows suit: one
+  divergent template is worse than a consistent imperfect one, and a module here has to
+  stay upstreamable. When you do use it, keep it dependency-free base R — the helper's own
+  docstring reads "Parse out options from a string without recourse to optparse" — and
+  keep the `opt` / `opt_types` list shape, which `limma_de.R:71-73` records as a stepping
+  stone _away_ from templates, toward module `bin/` directories plus a real parser.
+
+  This is a local consistency argument and nothing more. It is **not** an nf-core rule: no
+  lint check enforces it and no guideline documents it. It spread into `nf-core/modules`
+  by imitation rather than by design.
+
+  **If you are reading this file in any repository other than
+  nf-core/differentialabundance, ignore this exception and apply the general rule above.**
+  Do not carry `parse_args()`, or this section, into another codebase — the point of
+  writing the exception down is to stop it spreading further.
+
+- **Know where `parse_args()` leaks.** It splits on `' ?--'` and then takes only the
+  second whitespace token, so two things break _silently_, with no error:
+  - an unquoted multi-token value — `--formula ~ treatment + batch` parses as `"~"`;
+  - a value containing a double dash — `--contrast case--control` parses as `"case"`.
+
+  Quoted values are safe (`--sample_id_col 'Sample Name'` survives, because `scan()`
+  respects quotes). This is why existing options comma-join instead of using spaces
+  (`limma_stdev_coef_lim = '0.1,4'`, `limma_winsor_tail_p = '0.05,0.1'`) and why free
+  text such as `--formula` is passed through the process `input:` tuple and interpolated
+  directly rather than routed through `ext.args`. When you add an option whose value could
+  contain spaces or dashes, do the same: quote it, comma-join it, or take it as an input.
 
 - **Scope.** Work inside the module directory, and edit `conf/modules.config` as needed —
   a module with options but no `withName:` entry silently runs on defaults. Produce minimal
@@ -120,6 +160,11 @@ here**, because every template is R:
 
 ## R template skeleton
 
+**Scope: this section documents the fork exception described under Rules.** It applies to
+nf-core/differentialabundance only, because every template here already looks like this.
+Do not reproduce it in another repository — there, keep the template concise and
+interpolate values directly instead of parsing them.
+
 Follow `modules/nf-core/limma/differential/templates/limma_de.R`. It defines three helpers at
 the top, then an option list, then the work:
 
@@ -134,7 +179,7 @@ opt <- list(
     output_prefix = ifelse('$task.ext.prefix' == 'null', '$meta.id', '$task.ext.prefix'),
     count_file    = '$intensities',
     sample_file   = '$samplesheet',
-    method        = 'quantile',
+    method        = NULL,        # required => no default; see the pitfall below
     round_digits  = NULL,
     seed          = NULL
 )
@@ -155,6 +200,20 @@ for (ao in names(args_opt)) {
 
 Rejecting unknown options with `stop()` is deliberate — it turns a typo in
 `conf/modules.config` into a task failure instead of a silently ignored setting. Keep it.
+
+**Never give a default to an option you also list in `required_opts`.** The check is an
+`is.null()` test, so a default makes it unreachable and the option becomes silently
+optional. `modules/local/limma/normalise/templates/limma_normalise.R` had exactly this
+bug: `method` defaulted to `'quantile'` while being listed as required, so a missing
+`--method` would have quantile-normalised instead of failing — and `method` is the only
+thing that module does. Either default it or require it, not both.
+
+Note that a `NULL` default still occupies a named slot, so the check works: `list(x =
+NULL)` keeps `"x"` in `names(opt)`, the coercion loop skips it (guarded by
+`! is.null(opt[[ao]])`, which also means a `NULL`-defaulted option is never class-coerced
+and stays `character`), and `opt[keys] <- lapply(opt[keys], nullify)` preserves it because
+single-bracket assignment with a list RHS does not delete `NULL` elements the way
+`[[<-` and `$<-` do.
 
 Every template also ends with a session-info sink and the versions block:
 
@@ -312,7 +371,7 @@ Pipeline-level nf-tests live in `tests/` at the repo root and are the responsibi
 - **`meta.yml` content is not linted for correctness.**
   `modules/nf-core/limma/differential/meta.yml:13` reads
   `tool_dev_url: https://github.com/cran/limma""` — stray quotes, and a read-only CRAN mirror
-  rather than limma's actual Bioconductor home. nf-core lint checks that the *keys* exist, not
+  rather than limma's actual Bioconductor home. nf-core lint checks that the _keys_ exist, not
   that the values are right. Fill these in properly; nobody else will catch it.
 
 - **Inconsistent `normalised` / `normalized` spelling.** Module outputs disagree, and the
