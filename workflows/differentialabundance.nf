@@ -100,6 +100,7 @@ citations_file = file(params.citations_file, checkIfExists: true)
 include { TABULAR_TO_GSEA_CHIP } from '../modules/local/tabular_to_gsea_chip'
 include { FILTER_DIFFTABLE } from '../modules/local/filter_difftable'
 include { LIMMA_LOG_NORMALIZE_MEDIAN } from '../modules/local/limma'
+include { LIMMA_LOG2 } from '../modules/local/limma'
 include { LIMMA_LOG_NORMALIZE_SCALE } from '../modules/local/limma'
 include { LIMMA_LOG_NORMALIZE_QUANTILE } from '../modules/local/limma'
 include { LIMMA_LOG_NORMALIZE_CYCLIC } from '../modules/local/limma'
@@ -362,38 +363,56 @@ workflow DIFFERENTIALABUNDANCE {
 
         limma_norm_methods = params.limma_normalisation.split(',')
 
+        // Accumulated below by whichever methods were requested. Starts null
+        // rather than channel.empty(): combining against an empty channel
+        // yields nothing, which would silently drop every matrix.
+        ch_processed_matrices = null
+
         if (limma_norm_methods.contains('median')) {
             LIMMA_LOG_NORMALIZE_MEDIAN(CUSTOM_MATRIXFILTER.out.filtered)
             ch_norm = LIMMA_LOG_NORMALIZE_MEDIAN.out.normalised
-            ch_processed_matrices = ch_norm.map{ it.tail() }.first()
+            def m_norm = ch_norm.map{ it.tail() }.first()
+            ch_processed_matrices = (ch_processed_matrices == null) ? m_norm : ch_processed_matrices.combine(m_norm)
             ch_versions = ch_versions.mix(LIMMA_LOG_NORMALIZE_MEDIAN.out.versions)
+        }
+
+        if (limma_norm_methods.contains('log2')) {
+            LIMMA_LOG2(CUSTOM_MATRIXFILTER.out.filtered)
+            ch_log2 = LIMMA_LOG2.out.normalised
+            def m_log2 = ch_log2.map{ it.tail() }.first()
+            ch_processed_matrices = (ch_processed_matrices == null) ? m_log2 : ch_processed_matrices.combine(m_log2)
+            ch_versions = ch_versions.mix(LIMMA_LOG2.out.versions)
         }
 
         if (limma_norm_methods.contains('scale')) {
             LIMMA_LOG_NORMALIZE_SCALE(CUSTOM_MATRIXFILTER.out.filtered)
             ch_scale = LIMMA_LOG_NORMALIZE_SCALE.out.normalised
-            ch_processed_matrices = ch_processed_matrices.combine(ch_scale.map{ it.tail() }.first())
+            def m_scale = ch_scale.map{ it.tail() }.first()
+            ch_processed_matrices = (ch_processed_matrices == null) ? m_scale : ch_processed_matrices.combine(m_scale)
             ch_versions = ch_versions.mix(LIMMA_LOG_NORMALIZE_SCALE.out.versions)
         }
 
         if (limma_norm_methods.contains('quantile')) {
             LIMMA_LOG_NORMALIZE_QUANTILE(CUSTOM_MATRIXFILTER.out.filtered)
             ch_quantile = LIMMA_LOG_NORMALIZE_QUANTILE.out.normalised
-            ch_processed_matrices = ch_processed_matrices.combine( ch_quantile.map{ it.tail() }.first() )
+            def m_quantile = ch_quantile.map{ it.tail() }.first()
+            ch_processed_matrices = (ch_processed_matrices == null) ? m_quantile : ch_processed_matrices.combine(m_quantile)
             ch_versions = ch_versions.mix(LIMMA_LOG_NORMALIZE_QUANTILE.out.versions)
         }
 
         if (limma_norm_methods.contains('cyclic_loess')) {
             LIMMA_LOG_NORMALIZE_CYCLIC(CUSTOM_MATRIXFILTER.out.filtered)
             ch_cyclic = LIMMA_LOG_NORMALIZE_CYCLIC.out.normalised
-            ch_processed_matrices = ch_processed_matrices.combine(ch_cyclic.map{ it.tail() }.first())
+            def m_cyclic = ch_cyclic.map{ it.tail() }.first()
+            ch_processed_matrices = (ch_processed_matrices == null) ? m_cyclic : ch_processed_matrices.combine(m_cyclic)
             ch_versions = ch_versions.mix(LIMMA_LOG_NORMALIZE_CYCLIC.out.versions)
         }
 
         if (limma_norm_methods.contains('vsn')) {
             LIMMA_NORMALIZE_VSN(CUSTOM_MATRIXFILTER.out.filtered)
             ch_vsn = LIMMA_NORMALIZE_VSN.out.normalised
-            ch_processed_matrices = ch_processed_matrices.combine(ch_vsn.map{ it.tail() }.first())
+            def m_vsn = ch_vsn.map{ it.tail() }.first()
+            ch_processed_matrices = (ch_processed_matrices == null) ? m_vsn : ch_processed_matrices.combine(m_vsn)
             ch_versions = ch_versions.mix(LIMMA_NORMALIZE_VSN.out.versions)
         }
 
@@ -408,8 +427,16 @@ workflow DIFFERENTIALABUNDANCE {
             ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_norm).first() // -> meta, samplesheet, filtered matrix
         } else if (params.exploratory_final_assay == 'scale') {
             ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_scale).first() // -> meta, samplesheet, filtered matrix
+        } else if (params.exploratory_final_assay == 'log2') {
+            ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_log2).first() // -> meta, samplesheet, log2 matrix, not normalised
+        } else if (params.exploratory_final_assay == 'raw') {
+            // Filtered but unnormalised. Reuses the channel the other study types
+            // feed to differential analysis, so filtering params still apply.
+            // Note this is LINEAR intensities: limma expects log-scale input, so
+            // prefer 'log2' unless you specifically want the untransformed matrix.
+            ch_samples_and_matrix_differential = ch_samples_and_matrix
         } else {
-            ch_samples_and_matrix_differential = VALIDATOR.out.sample_meta.join(ch_raw).first() // -> meta, samplesheet, filtered matrix
+            error("Unrecognised '--exploratory_final_assay ${params.exploratory_final_assay}' for study_type 'mass_spec'. Valid values are: raw, log2, median (or normalised/normalized), scale, quantile (or quantile_normalised/quantile_normalized), cyclic_loess, vsn (or variance_stabilised/variance_stabilized). Anything other than 'raw' also requires the matching method in --limma_normalisation.")
         }
 
         LIMMA_DIFFERENTIAL (ch_contrasts, ch_samples_and_matrix_differential)
